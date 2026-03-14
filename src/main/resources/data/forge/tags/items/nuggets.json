@@ -1,0 +1,9 @@
+{
+  "values": [
+    "composite_material:obsidian_steel_nugget",
+    "composite_material:allay_steel_nugget",
+    "composite_material:dungeon_steel_nugget",
+    "composite_material:echoium_nugget",
+    "composite_material:etherite_nugget"
+  ]
+}

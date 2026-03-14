@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "composite_material:block/prismarine_alloy_block",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "composite_material:block/prismarine_alloy_block",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "composite_material:block/prismarine_alloy_block",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "composite_material:block/prismarine_alloy_block",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "composite_material:block/prismarine_alloy_block"
+    },
+    "facing=west": {
+      "model": "composite_material:block/prismarine_alloy_block",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

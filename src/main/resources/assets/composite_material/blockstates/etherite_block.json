@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "composite_material:block/etherite_block"
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "composite_material:item/amethyst_shield",
+		"particle": "minecraft:block/amethyst_block"
+	},
+	"elements": [
+		{
+			"from": [-9, -9, 1],
+			"to": [9, 9, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, -11, 2]},
+			"faces": {
+				"north": {"uv": [5, 0.25, 9.5, 4.75], "texture": "#0"},
+				"east": {"uv": [4.75, 0.25, 5, 4.75], "texture": "#0"},
+				"south": {"uv": [0.25, 0.25, 4.75, 4.75], "texture": "#0"},
+				"west": {"uv": [0, 0.25, 0.25, 4.75], "texture": "#0"},
+				"up": {"uv": [4.75, 0.25, 0.25, 0], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [9.25, 0, 4.75, 0.25], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"from": [-1, -3, -5],
+			"to": [1, 3, 1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [6, -3, 1]},
+			"faces": {
+				"north": {"uv": [13, 1.5, 13.5, 3], "texture": "#0"},
+				"east": {"uv": [11.5, 1.5, 13, 3], "texture": "#0"},
+				"south": {"uv": [11, 1.5, 11.5, 3], "texture": "#0"},
+				"west": {"uv": [9.5, 1.5, 11, 3], "texture": "#0"},
+				"up": {"uv": [11.5, 1.5, 11, 0], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [12, 0, 11.5, 1.5], "rotation": 180, "texture": "#0"}
+			}
+		}
+	],
+	"gui_light": "front",
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [ 0, 90, 0 ],
+			"translation": [ 10, 6, -4 ],
+			"scale": [ 1, 1, 1 ]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [ 0, 90, 0 ],
+			"translation": [ 10, 6, 12 ],
+			"scale": [ 1, 1, 1 ]
+		},
+		"firstperson_righthand": {
+			"rotation": [ 0, 180, 5 ],
+			"translation": [ -10, 2, -10 ],
+			"scale": [ 1.25, 1.25, 1.25 ]
+		},
+		"firstperson_lefthand": {
+			"rotation": [ 0, 180, 5 ],
+			"translation": [ 10, 0, -10 ],
+			"scale": [ 1.25, 1.25, 1.25 ]
+		},
+		"gui": {
+			"rotation": [ 15, -25, -5 ],
+			"translation": [ 3.5, 3, 0 ],
+			"scale": [ 0.65, 0.65, 0.65 ]
+		},
+		"fixed": {
+			"rotation": [ 0, 180, 0 ],
+			"translation": [ -4.5, 4.5, -5],
+			"scale":[ 0.55, 0.55, 0.55]
+		},
+		"ground": {
+			"rotation": [ 0, 0, 0 ],
+			"translation": [ 2, 4, 2],
+			"scale":[ 0.25, 0.25, 0.25]
+		}
+	},
+	"overrides": [{
+		"predicate": { "blocking": 1 },
+		"model": "composite_material:item/amethyst_shield_blocking"
+	}]
+}

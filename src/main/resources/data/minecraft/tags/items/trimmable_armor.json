@@ -1,0 +1,33 @@
+{
+  "values": [
+    "composite_material:allay_steel_helmet",
+    "composite_material:allay_steel_chestplate",
+    "composite_material:allay_steel_leggings",
+    "composite_material:allay_steel_boots",
+    "composite_material:amethyst_helmet",
+    "composite_material:amethyst_chestplate",
+    "composite_material:amethyst_leggings",
+    "composite_material:amethyst_boots",
+    "composite_material:copper_helmet",
+    "composite_material:copper_chestplate",
+    "composite_material:copper_leggings",
+    "composite_material:copper_boots",
+    "composite_material:echoium_helmet",
+    "composite_material:echoium_chestplate",
+    "composite_material:echoium_leggings",
+    "composite_material:echoium_boots",
+    "composite_material:etherite_helmet",
+    "composite_material:etherite_chestplate",
+    "composite_material:etherite_leggings",
+    "composite_material:etherite_boots",
+    "composite_material:obsidian_helmet",
+    "composite_material:obsidian_chestplate",
+    "composite_material:obsidian_leggings",
+    "composite_material:obsidian_boots",
+    "composite_material:primitive_helmet",
+    "composite_material:primitive_chestplate",
+    "composite_material:primitive_leggings",
+    "composite_material:primitive_boots"
+
+  ]
+}

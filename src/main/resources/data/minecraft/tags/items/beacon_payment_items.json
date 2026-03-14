@@ -1,0 +1,9 @@
+{
+  "values": [
+    "composite_material:obsidian_steel_ingot",
+    "composite_material:allay_steel_ingot",
+    "composite_material:dungeon_steel_ingot",
+    "composite_material:echoium_ingot",
+    "composite_material:etherite_ingot"
+  ]
+}

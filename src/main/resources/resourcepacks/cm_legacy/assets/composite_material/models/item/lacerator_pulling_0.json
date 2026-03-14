@@ -1,0 +1,6 @@
+{
+  "parent": "composite_material:item/lacerator",
+  "textures": {
+    "layer0": "composite_material:item/lacerator_pulling_0"
+  }
+}

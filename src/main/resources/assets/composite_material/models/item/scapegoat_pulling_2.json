@@ -1,0 +1,6 @@
+{
+  "parent": "composite_material:item/scapegoat",
+  "textures": {
+    "layer0": "composite_material:item/dungeon_bow_pulling_2"
+  }
+}

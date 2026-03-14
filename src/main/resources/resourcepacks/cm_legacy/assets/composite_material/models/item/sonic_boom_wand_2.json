@@ -1,0 +1,6 @@
+{
+  "parent": "composite_material:item/sonic_boom_wand",
+  "textures": {
+    "layer0": "composite_material:item/sonic_boom_wand_powering_2"
+  }
+}

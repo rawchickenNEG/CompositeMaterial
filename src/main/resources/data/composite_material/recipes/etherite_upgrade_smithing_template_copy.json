@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "1": {
+      "item": "composite_material:etherite_ingot"
+    },
+    "2": {
+      "item": "composite_material:etherite_upgrade_smithing_template"
+    },
+    "3": {
+      "item": "composite_material:perkin"
+    },
+    "4": {
+      "item": "composite_material:evolutium"
+    }
+  },
+  "pattern": [
+    "121",
+    "131",
+    "141"
+  ],
+  "result": {
+    "count" : 2,
+    "item": "composite_material:etherite_upgrade_smithing_template"
+  }
+}

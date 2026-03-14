@@ -1,0 +1,9 @@
+{
+  "values": [
+    "composite_material:flint_axe",
+    "composite_material:flint_hoe",
+    "composite_material:flint_pickaxe",
+    "composite_material:flint_shovel",
+    "composite_material:flint_sword"
+  ]
+}

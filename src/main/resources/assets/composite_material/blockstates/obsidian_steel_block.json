@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "composite_material:block/obsidian_steel_block"
+    }
+  }
+}

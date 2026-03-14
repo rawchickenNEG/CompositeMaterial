@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "entries": [
+    "composite_material:elder_guardian_spike",
+    "composite_material:warden_hand",
+    "composite_material:add_disenchanted_book_to_dungeon",
+    "composite_material:add_disenchanted_book_to_fortress",
+    "composite_material:add_duplichanted_book_to_ancient_city",
+    "composite_material:add_obsidian_steel_block_to_bastion",
+    "composite_material:add_purifichanted_book_to_mansion",
+    "composite_material:add_purifichanted_book_to_pillager_outpost",
+    "composite_material:add_reinforced_book_to_end_city"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "values": [
+    "composite_material:echoium_axe",
+    "composite_material:echoium_hoe",
+    "composite_material:echoium_pickaxe",
+    "composite_material:echoium_shovel",
+    "composite_material:echoium_sword",
+    "composite_material:echoium_sword_reinforced"
+  ]
+}

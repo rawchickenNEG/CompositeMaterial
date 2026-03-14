@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "composite_material:block/dungeon_steel_block"
+  }
+}

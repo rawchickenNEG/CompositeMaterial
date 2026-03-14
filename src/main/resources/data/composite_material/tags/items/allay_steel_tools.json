@@ -1,0 +1,9 @@
+{
+  "values": [
+    "composite_material:allay_steel_axe",
+    "composite_material:allay_steel_hoe",
+    "composite_material:allay_steel_pickaxe",
+    "composite_material:allay_steel_shovel",
+    "composite_material:allay_steel_sword"
+  ]
+}

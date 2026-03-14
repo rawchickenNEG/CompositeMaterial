@@ -1,0 +1,22 @@
+{
+  "values": [
+    "composite_material:etherite_axe",
+    "composite_material:etherite_hoe",
+    "composite_material:etherite_pickaxe",
+    "composite_material:etherite_shovel",
+    "composite_material:etherite_sword",
+    "composite_material:etherite_sword_reinforced",
+    "composite_material:etherite_helmet",
+    "composite_material:etherite_leggings",
+    "composite_material:etherite_boots",
+    "composite_material:etherite_chestplate",
+    "composite_material:etherite_ingot",
+    "composite_material:etherite_nugget",
+    "composite_material:etherite_block",
+    "composite_material:etherite_totem",
+    "composite_material:etherite_wand",
+    "composite_material:etherite_shield",
+    "composite_material:reinforced_book",
+    "composite_material:creative_reinforced_book"
+  ]
+}

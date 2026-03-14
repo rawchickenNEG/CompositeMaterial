@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:item/handheld",
+  "loader": "forge:separate_transforms",
+  "base": {
+    "parent": "composite_material:item/etherite_sword_handheld"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "composite_material:item/etherite_sword_item"
+    },
+    "ground": {
+      "parent": "composite_material:item/etherite_sword_item"
+    },
+    "fixed": {
+      "parent": "composite_material:item/etherite_sword_item"
+    }
+  }
+}

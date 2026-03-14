@@ -1,0 +1,9 @@
+{
+  "values": [
+    "composite_material:copper_axe",
+    "composite_material:copper_hoe",
+    "composite_material:copper_pickaxe",
+    "composite_material:copper_shovel",
+    "composite_material:copper_sword"
+  ]
+}

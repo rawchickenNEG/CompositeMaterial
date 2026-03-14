@@ -1,0 +1,7 @@
+{
+  "values": [
+    "minecraft:spawner",
+    "composite_material:obsidian_steel_block",
+    "composite_material:etherite_block"
+  ]
+}

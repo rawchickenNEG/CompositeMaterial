@@ -1,0 +1,11 @@
+{
+  "type": "composite_material:add_loot_table",
+  "conditions":
+  [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/pillager_outpost"
+    }
+  ],
+  "lootTable": "composite_material:purifichanted_book_spawn"
+}

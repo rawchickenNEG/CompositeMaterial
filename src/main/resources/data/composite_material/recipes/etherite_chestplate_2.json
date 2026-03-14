@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "composite_material:etherite_ingot"
+  },
+  "base": {
+    "item": "composite_material:allay_steel_chestplate"
+  },
+  "result": {
+    "item": "composite_material:etherite_chestplate",
+    "nbt": "{CMEtheriteUnbreakable:1b}"
+  },
+  "template": {
+    "item": "composite_material:etherite_upgrade_smithing_template"
+  }
+}
