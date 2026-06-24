@@ -2,6 +2,7 @@ package io.github.rcneg.compositematerial.common.mixin;
 
 import io.github.rcneg.compositematerial.common.accessor.IVanitatiumReplaceable;
 import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
@@ -37,40 +38,45 @@ public abstract class ItemStackMixin {
 
     @Inject(
             method = "hurt",
-            at = @At("HEAD"),
-            require = 0,
-            cancellable = true)
-
-    private <T extends LivingEntity> void cm$cancelLoseDurability(int p_220158_, RandomSource p_220159_, ServerPlayer p_220160_, CallbackInfoReturnable<Boolean> cir) {
-        ItemStack self = (ItemStack)(Object)this;
-        if (cm$hasEtheriteUnbreakableTag() || (self.getItem() instanceof IVanitatiumReplaceable && p_220158_ < 20)) {
-            self.setDamageValue(0);
-            cir.setReturnValue(false);
-        }
-    }
-
-    @Inject(
-            method = "hurt",
-            at = @At("TAIL"),
+            at = @At("RETURN"),
+            cancellable = true,
             require = 0
     )
-
-    private <T extends LivingEntity> void cm$vanitatiumReplaceOnLoseDurability(int p_220158_, RandomSource p_220159_, ServerPlayer player, CallbackInfoReturnable<Boolean> cir) {
+    private void cm$handleVanitatiumArmor(int amount, RandomSource random, ServerPlayer player, CallbackInfoReturnable<Boolean> cir) {
         ItemStack self = (ItemStack)(Object)this;
-        if(self.getItem() instanceof IVanitatiumReplaceable replaceable){
+        //少量耐久损失不破坏装备
+        if (cm$hasEtheriteUnbreakableTag() || (self.getItem() instanceof IVanitatiumReplaceable && amount < 20)) {
+            self.setDamageValue(0);
+            cir.setReturnValue(false);
+            return;
+        }
+        //破坏并替换装备
+        if (self.getItem() instanceof IVanitatiumReplaceable replaceable) {
             EquipmentSlot slot = EquipmentSlot.MAINHAND;
-            if(self.getItem() instanceof ArmorItem armorItem){
-                slot = armorItem.getEquipmentSlot();
+            if (self.getItem() instanceof ArmorItem armorItem) {
+                EquipmentSlot armorSlot = armorItem.getEquipmentSlot();
+                if (player.getItemBySlot(armorSlot) == self) {
+                    slot = armorSlot;
+                }
             }
             ItemStack replacement = new ItemStack(replaceable.getReplaceItem());
             replacement.setTag(self.getOrCreateTag());
-            self.shrink(1);
-            if(slot.isArmor() && player.getItemBySlot(slot).isEmpty()){
+            replacement.setDamageValue(0);
+            player.setItemSlot(slot, replacement);
+
+            if(slot.isArmor()){
                 player.setItemSlot(slot, replacement);
-            } else if (player.getItemBySlot(EquipmentSlot.MAINHAND)==self){
-                player.setItemSlot(slot, replacement);
-            }else {
-                ItemHandlerHelper.giveItemToPlayer(player, replacement);
+            } else {
+                if (!player.getInventory().add(replacement)) {
+                    player.drop(replacement, false);
+                }
+                self.shrink(1);
+            }
+
+            CompoundTag tag = player.getPersistentData();
+            if(tag.contains("CMVanitatiumConsumedCount")){
+                tag.putInt("CMVanitatiumConsumedCount", tag.getInt("CMVanitatiumConsumedCount") + 1);
+                player.inventoryMenu.broadcastChanges();
             }
         }
     }

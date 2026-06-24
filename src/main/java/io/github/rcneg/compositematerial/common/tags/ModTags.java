@@ -18,6 +18,7 @@ public class ModTags {
     public static final TagKey<Item> OBSIDIAN_TOOLS = modItemTag("obsidian_tools");
     public static final TagKey<Item> DISC_TOOLS = modItemTag("disc_tools");
     public static final TagKey<Item> ETHERITE_ITEMS = modItemTag("etherite_items");
+    public static final TagKey<Item> ANVIL_BREAK_ITEMS = modItemTag("anvil_break_items");
 
     private static TagKey<Item> modItemTag(String path) {
         return ItemTags.create(new ResourceLocation(CompositeMaterial.MODID, path));

@@ -4,6 +4,7 @@
     "composite_material:primitive_hoe",
     "composite_material:primitive_pickaxe",
     "composite_material:primitive_shovel",
-    "composite_material:primitive_sword"
+    "composite_material:primitive_sword",
+    "composite_material:primitive_sword_reinforced"
   ]
 }

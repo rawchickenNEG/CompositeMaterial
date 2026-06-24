@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "composite_material:vanitatium_crystal"
+  },
+  "base": {
+    "item": "composite_material:amethyst_axe"
+  },
+  "result": {
+    "item": "composite_material:vanitatium_axe"
+  },
+  "template": {
+    "item": "composite_material:vanitatium_upgrade_smithing_template"
+  }
+}

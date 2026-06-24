@@ -44,7 +44,7 @@ public class ReinforcedBook extends MagicItems {
                 }
                 EnchantmentHelper.setEnchantments(newenchant, item);
             }
-            return changed ? item : null;
+            return changed ? item : ItemStack.EMPTY;
         }
         return ItemStack.EMPTY;
     }

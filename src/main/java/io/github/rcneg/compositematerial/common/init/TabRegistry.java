@@ -33,12 +33,15 @@ public class TabRegistry {
                 output.accept(ItemRegistry.PERKIN.get());
                 output.accept(ItemRegistry.EVOLUTIUM.get());
                 output.accept(ItemRegistry.PRIMITIVE_TENACITY.get());
+                output.accept(ItemRegistry.VANITATIUM_CRYSTAL.get());
                 output.accept(ItemRegistry.DUNGEON_STEEL_NUGGET.get());
                 output.accept(ItemRegistry.ALLAY_STEEL_NUGGET.get());
                 output.accept(ItemRegistry.ETHERITE_NUGGET.get());
                 output.accept(ItemRegistry.ECHOIUM_NUGGET.get());
                 output.accept(ItemRegistry.OBSIDIAN_STEEL_NUGGET.get());
                 output.accept(ItemRegistry.ETHERITE_UPGRADE_SMITHING_TEMPLATE.get());
+                output.accept(ItemRegistry.PRIMITIVE_UPGRADE_SMITHING_TEMPLATE.get());
+                output.accept(ItemRegistry.VANITATIUM_UPGRADE_SMITHING_TEMPLATE.get());
 
                 output.accept(ItemRegistry.DUNGEON_STEEL_TOTEM.get());
                 output.accept(ItemRegistry.ETHERITE_TOTEM.get());
@@ -63,6 +66,11 @@ public class TabRegistry {
                 output.accept(ItemRegistry.ALLAY_STEEL_CHESTPLATE.get());
                 output.accept(ItemRegistry.ALLAY_STEEL_LEGGINGS.get());
                 output.accept(ItemRegistry.ALLAY_STEEL_BOOTS.get());
+
+                output.accept(ItemRegistry.DUNGEON_HELMET.get());
+                output.accept(ItemRegistry.DUNGEON_CHESTPLATE.get());
+                output.accept(ItemRegistry.DUNGEON_LEGGINGS.get());
+                output.accept(ItemRegistry.DUNGEON_BOOTS.get());
 
                 output.accept(ItemRegistry.ECHOIUM_HELMET.get());
                 output.accept(ItemRegistry.ECHOIUM_CHESTPLATE.get());
@@ -117,6 +125,7 @@ public class TabRegistry {
                 output.accept(ItemRegistry.ALLAY_STEEL_AXE.get());
                 output.accept(ItemRegistry.ALLAY_STEEL_SHOVEL.get());
                 output.accept(ItemRegistry.ALLAY_STEEL_HOE.get());
+                output.accept(ItemRegistry.ALLAY_STEEL_SWORD_REINFORCED.get());
 
                 output.accept(ItemRegistry.ECHOIUM_SWORD.get());
                 output.accept(ItemRegistry.ECHOIUM_PICKAXE.get());
@@ -137,6 +146,7 @@ public class TabRegistry {
                 output.accept(ItemRegistry.OBSIDIAN_STEEL_AXE.get());
                 output.accept(ItemRegistry.OBSIDIAN_STEEL_SHOVEL.get());
                 output.accept(ItemRegistry.OBSIDIAN_STEEL_HOE.get());
+                output.accept(ItemRegistry.OBSIDIAN_STEEL_SWORD_REINFORCED.get());
 
                 output.accept(ItemRegistry.AMETHYST_SWORD.get());
                 output.accept(ItemRegistry.AMETHYST_PICKAXE.get());
@@ -194,6 +204,7 @@ public class TabRegistry {
                 output.accept(BlockRegistry.ALLAY_STEEL_BLOCK.get());
                 output.accept(BlockRegistry.DUNGEON_STEEL_BLOCK.get());
                 output.accept(BlockRegistry.OBSIDIAN_STEEL_BLOCK.get());
+                output.accept(BlockRegistry.VANITATIUM_BLOCK.get());
                 output.accept(BlockRegistry.PRISMARINE_ALLOY_BLOCK.get());
             }).build());
 

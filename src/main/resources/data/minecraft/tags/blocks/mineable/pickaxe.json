@@ -5,6 +5,7 @@
     "composite_material:prismarine_alloy_block",
     "composite_material:etherite_block",
     "composite_material:allay_steel_block",
-    "composite_material:echoium_block"
+    "composite_material:echoium_block",
+    "composite_material:vanitatium_block"
   ]
 }

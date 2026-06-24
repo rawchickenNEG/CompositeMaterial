@@ -1,0 +1,24 @@
+{
+  "values": [
+    "composite_material:primitive_axe",
+    "composite_material:primitive_hoe",
+    "composite_material:primitive_pickaxe",
+    "composite_material:primitive_shovel",
+    "composite_material:primitive_sword",
+    "composite_material:primitive_sword_reinforced",
+    "composite_material:primitive_helmet",
+    "composite_material:primitive_chestplate",
+    "composite_material:primitive_leggings",
+    "composite_material:primitive_boots",
+    "composite_material:vanitatium_axe",
+    "composite_material:vanitatium_hoe",
+    "composite_material:vanitatium_pickaxe",
+    "composite_material:vanitatium_shovel",
+    "composite_material:vanitatium_sword",
+    "composite_material:vanitatium_sword_reinforced",
+    "composite_material:vanitatium_helmet",
+    "composite_material:vanitatium_chestplate",
+    "composite_material:vanitatium_leggings",
+    "composite_material:vanitatium_boots"
+  ]
+}

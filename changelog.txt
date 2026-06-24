@@ -1,5 +1,20 @@
 Composite Material 1.20.1 Changelog
+ - 1.3.0
+    Add new ability for Etherite Anvil.
+    Add anvil break items tag for Primitive and Vanitatium gears, item in this tag are always damage anvil block.
+    Change Etherite Anvil recipe.
+    Change Sculker Infuser description.
+    Fix Vanitatium gears broken and degenerate incorrectly issue.
+    Fix Vanitatium Armor tool description and Etherite Unbreakable in en_us.
+    Fix incorrect Etherite Anvil xp cost issue.
+    Fix game crash issue when this mod loaded with Apotheosis.
+    Fix display too expensive info in Etherite Anvil screen issue.
+    Fix Vanitatium hammer additional damage changing issue.
+    Remove Vanitatium Armor full set ability description (That is not working at all! will use some new ideas to replace that).
+    Remove Etherite Anvil exceed enchantment ability.
+    Remove Etherite Anvil un-expensive ability.
  - 1.2.9
+    Add Vanitatium Block.
     Added Summon Wand, Allay Wand and their summon Entities.
     Added Rune items for reverse crafting and smelting recipes.
     Added sound effects and more particles for Convertible Items.
@@ -24,15 +39,21 @@ Composite Material 1.20.1 Changelog
     Changed most of the magic items working way, now is using Anvil instead of players' both hands.
     Changed Creative Reinforced Book max stack size to 64.
     Changed recipe for Creative Reinforced Book.
+    Changed Allay Steel tools can break blocks with block entity at one time.
     Changed Echoium Armors feature from providing additional sonic boom damage to providing additional experiences, move sonic boom damage to full sets feature.
+    Change rarity for some items.
+    Change recipe for some armor items.
+    Change Dungeon Pickaxe healing mechanic.
     Etherite Items has Etherie Unbreakable tag when crafted and in creative tab.
     Removed fast mining ability of Etherite Tools when mining unmatched blocks.
+    Remove Primitive Armor immunity of explosion damage.
     Fixed server crashing issue when using Allay Steel Tools to hurt entities in Server (wait for verification).
     Fixed bug of Echoium Armors provide damage addition to wrong damage types.
     Fixed bug of Convertible Items not disappear when consumed all stack.
     Fixed text display bug of Primitive Totem.
     Fixed missing description issue of Allay Steel Armors.
     Fixed missing Etherite Totem animation issue.
+    Fix totem like item active issue.
     Primitive Totem will display absorbed effects.
     Optimized Armor Items.
  - 1.2.8

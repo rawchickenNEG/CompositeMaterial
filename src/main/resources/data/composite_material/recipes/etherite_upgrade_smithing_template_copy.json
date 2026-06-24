@@ -9,15 +9,12 @@
     },
     "3": {
       "item": "composite_material:perkin"
-    },
-    "4": {
-      "item": "composite_material:evolutium"
     }
   },
   "pattern": [
     "121",
     "131",
-    "141"
+    "111"
   ],
   "result": {
     "count" : 2,

@@ -1,13 +1,13 @@
 package io.github.rcneg.compositematerial.common.init;
 
 import io.github.rcneg.compositematerial.CompositeMaterial;
-import io.github.rcneg.compositematerial.common.blocks.CommonBlocks;
 import io.github.rcneg.compositematerial.common.items.*;
 import io.github.rcneg.compositematerial.common.items.allaytools.*;
 import io.github.rcneg.compositematerial.common.items.amethysttools.*;
 import io.github.rcneg.compositematerial.common.items.armors.*;
 import io.github.rcneg.compositematerial.common.items.disctools.*;
 import io.github.rcneg.compositematerial.common.items.dungeontools.*;
+import io.github.rcneg.compositematerial.common.items.magicfoods.PrimitiveNostrum;
 import io.github.rcneg.compositematerial.common.items.magicitems.*;
 import io.github.rcneg.compositematerial.common.items.coppertools.*;
 import io.github.rcneg.compositematerial.common.items.echoiumtools.*;
@@ -50,6 +50,8 @@ public class ItemRegistry {
     public static final RegistryObject<Item> DUNGEON_STEEL_BLOCK = ITEMS.register("dungeon_steel_block", () -> new ItemNameBlockItem(BlockRegistry.DUNGEON_STEEL_BLOCK.get(), defaultBuilder()));
     public static final RegistryObject<Item> ECHOIUM_BLOCK = ITEMS.register("echoium_block", () -> new ItemNameBlockItem(BlockRegistry.ECHOIUM_BLOCK.get(), defaultBuilder()));
     public static final RegistryObject<Item> ETHERITE_BLOCK = ITEMS.register("etherite_block", () -> new ItemNameBlockItem(BlockRegistry.ETHERITE_BLOCK.get(), defaultBuilder()));
+    public static final RegistryObject<Item> VANITATIUM_BLOCK = ITEMS.register("vanitatium_block", () -> new ItemNameBlockItem(BlockRegistry.VANITATIUM_BLOCK.get(), defaultBuilder()));
+
     public static final RegistryObject<Item> PRISMARINE_ALLOY_BLOCK = ITEMS.register("prismarine_alloy_block", () -> new ItemNameBlockItem(BlockRegistry.PRISMARINE_ALLOY_BLOCK.get(), defaultBuilder()));
     public static final RegistryObject<Item> GUARDIAN_ELDER_SPIKE = ITEMS.register("guardian_elder_spike", () -> new GuardianSpike(defaultBuilder().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> HEART_OF_THE_DRY = ITEMS.register("heart_of_the_dry", () -> new DryHeartItem(defaultBuilder()));
@@ -59,7 +61,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> PRIMITIVE_TENACITY = ITEMS.register("primitive_tenacity", () -> new TippedItems(defaultBuilder().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> STRONG_WILL = ITEMS.register("strong_will", () -> new StrongWill(defaultBuilder().rarity(Rarity.UNCOMMON).craftRemainder(Items.GLASS_BOTTLE)));
     public static final RegistryObject<Item> VOID_WILL = ITEMS.register("void_will", () -> new TippedItems(defaultBuilder().rarity(Rarity.UNCOMMON).craftRemainder(Items.GLASS_BOTTLE)));
-    public static final RegistryObject<Item> VANITATIUM_CRYSTAL = ITEMS.register("vanitatium", () -> new TippedItems(defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> VANITATIUM_CRYSTAL = ITEMS.register("vanitatium_crystal", () -> new TippedItems(defaultBuilder().rarity(Rarity.UNCOMMON)));
 
     public static final RegistryObject<Item> ETHERITE_UPGRADE_SMITHING_TEMPLATE = ITEMS.register("etherite_upgrade_smithing_template", () -> new SmithingTemplateItem(
             Component.translatable("item.composite_material.etherite_upgrade_smithing_template.applies_to").withStyle(ChatFormatting.DARK_PURPLE),
@@ -67,8 +69,26 @@ public class ItemRegistry {
             Component.translatable("item.composite_material.etherite_upgrade_smithing_template.title").withStyle(ChatFormatting.GRAY),
             Component.translatable("item.composite_material.etherite_upgrade_smithing_template.base_slot_description"),
             Component.translatable("item.composite_material.etherite_upgrade_smithing_template.additions_slot_description"),
-            createEtheriteUpgradeIconList(),
+            createArmorUpgradeIconList(),
             createEtheriteUpgradeMaterialList()
+    ));
+    public static final RegistryObject<Item> PRIMITIVE_UPGRADE_SMITHING_TEMPLATE = ITEMS.register("primitive_upgrade_smithing_template", () -> new SmithingTemplateItem(
+            Component.translatable("item.composite_material.primitive_upgrade_smithing_template.applies_to").withStyle(ChatFormatting.DARK_PURPLE),
+            Component.translatable("item.composite_material.primitive_upgrade_smithing_template.ingredients").withStyle(ChatFormatting.DARK_PURPLE),
+            Component.translatable("item.composite_material.primitive_upgrade_smithing_template.title").withStyle(ChatFormatting.GRAY),
+            Component.translatable("item.composite_material.primitive_upgrade_smithing_template.base_slot_description"),
+            Component.translatable("item.composite_material.primitive_upgrade_smithing_template.additions_slot_description"),
+            createCommonUpgradeIconList(),
+            createPrimitiveUpgradeMaterialList()
+    ));
+    public static final RegistryObject<Item> VANITATIUM_UPGRADE_SMITHING_TEMPLATE = ITEMS.register("vanitatium_upgrade_smithing_template", () -> new SmithingTemplateItem(
+            Component.translatable("item.composite_material.vanitatium_upgrade_smithing_template.applies_to").withStyle(ChatFormatting.DARK_PURPLE),
+            Component.translatable("item.composite_material.vanitatium_upgrade_smithing_template.ingredients").withStyle(ChatFormatting.DARK_PURPLE),
+            Component.translatable("item.composite_material.vanitatium_upgrade_smithing_template.title").withStyle(ChatFormatting.GRAY),
+            Component.translatable("item.composite_material.vanitatium_upgrade_smithing_template.base_slot_description"),
+            Component.translatable("item.composite_material.vanitatium_upgrade_smithing_template.additions_slot_description"),
+            createCommonUpgradeIconList(),
+            createVanitaiumUpgradeMaterialList()
     ));
     public static final RegistryObject<Item> WARDEN_HAND = ITEMS.register("warden_hand", () -> new TippedItems(defaultBuilder().rarity(Rarity.UNCOMMON)));
 
@@ -108,27 +128,28 @@ public class ItemRegistry {
     public static final RegistryObject<Item> DUNGEON_SHIELD = ITEMS.register("dungeon_shield", () -> new DungeonShield(defaultBuilder().durability(2048).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> ETHERITE_SHIELD = ITEMS.register("etherite_shield", () -> new EtheriteShield(defaultBuilder().durability(8000).rarity(Rarity.UNCOMMON)));
 
-    public static final RegistryObject<Item> ETHERITE_SWORD = ITEMS.register("etherite_sword", () -> new EtheriteSword(ItemTier.ETHERITE, 2, -2.4F, defaultBuilder()));
-    public static final RegistryObject<Item> ETHERITE_AXE = ITEMS.register("etherite_axe", () -> new EtheriteAxe(ItemTier.ETHERITE, 5.0F, -3.0F, defaultBuilder()));
-    public static final RegistryObject<Item> ETHERITE_PICKAXE = ITEMS.register("etherite_pickaxe", () -> new EtheritePickaxe(ItemTier.ETHERITE, 0, -2.8F, defaultBuilder()));
-    public static final RegistryObject<Item> ETHERITE_SHOVEL = ITEMS.register("etherite_shovel", () -> new EtheriteShovel(ItemTier.ETHERITE, 0.5F, -3.0F, defaultBuilder()));
-    public static final RegistryObject<Item> ETHERITE_HOE = ITEMS.register("etherite_hoe", () -> new EtheriteHoe(ItemTier.ETHERITE, -10, 0, defaultBuilder()));
-    public static final RegistryObject<Item> ETHERITE_HELMET = ITEMS.register("etherite_helmet", () -> new EtheriteArmors(ArmorTier.ETHERITE, ArmorItem.Type.HELMET, defaultBuilder()));
-    public static final RegistryObject<Item> ETHERITE_CHESTPLATE = ITEMS.register("etherite_chestplate", () -> new EtheriteArmors(ArmorTier.ETHERITE, ArmorItem.Type.CHESTPLATE, defaultBuilder()));
-    public static final RegistryObject<Item> ETHERITE_LEGGINGS = ITEMS.register("etherite_leggings", () -> new EtheriteArmors(ArmorTier.ETHERITE, ArmorItem.Type.LEGGINGS, defaultBuilder()));
-    public static final RegistryObject<Item> ETHERITE_BOOTS = ITEMS.register("etherite_boots", () -> new EtheriteArmors(ArmorTier.ETHERITE, ArmorItem.Type.BOOTS, defaultBuilder()));
-    public static final RegistryObject<Item> ETHERITE_SWORD_REINFORCED = ITEMS.register("etherite_sword_reinforced", () -> new EtheriteSwordReinforced(ItemTier.ETHERITE, 4, -2.4F, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> ETHERITE_SWORD = ITEMS.register("etherite_sword", () -> new EtheriteSword(ItemTier.ETHERITE, 2, -2.4F, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> ETHERITE_AXE = ITEMS.register("etherite_axe", () -> new EtheriteAxe(ItemTier.ETHERITE, 5.0F, -3.0F, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> ETHERITE_PICKAXE = ITEMS.register("etherite_pickaxe", () -> new EtheritePickaxe(ItemTier.ETHERITE, 0, -2.8F, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> ETHERITE_SHOVEL = ITEMS.register("etherite_shovel", () -> new EtheriteShovel(ItemTier.ETHERITE, 0.5F, -3.0F, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> ETHERITE_HOE = ITEMS.register("etherite_hoe", () -> new EtheriteHoe(ItemTier.ETHERITE, -10, 0, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> ETHERITE_HELMET = ITEMS.register("etherite_helmet", () -> new EtheriteArmors(ArmorTier.ETHERITE, ArmorItem.Type.HELMET, defaultBuilder().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> ETHERITE_CHESTPLATE = ITEMS.register("etherite_chestplate", () -> new EtheriteArmors(ArmorTier.ETHERITE, ArmorItem.Type.CHESTPLATE, defaultBuilder().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> ETHERITE_LEGGINGS = ITEMS.register("etherite_leggings", () -> new EtheriteArmors(ArmorTier.ETHERITE, ArmorItem.Type.LEGGINGS, defaultBuilder().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> ETHERITE_BOOTS = ITEMS.register("etherite_boots", () -> new EtheriteArmors(ArmorTier.ETHERITE, ArmorItem.Type.BOOTS, defaultBuilder().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> ETHERITE_SWORD_REINFORCED = ITEMS.register("etherite_sword_reinforced", () -> new EtheriteSwordReinforced(ItemTier.ETHERITE, 4, -2.4F, defaultBuilder().rarity(Rarity.EPIC)));
 
-    public static final RegistryObject<Item> ALLAY_STEEL_SWORD = ITEMS.register("allay_steel_sword", () -> new AllaySteelSword(ItemTier.ALLAY_STEEL, 2, -2.4F, defaultBuilder()));
-    public static final RegistryObject<Item> ALLAY_STEEL_AXE = ITEMS.register("allay_steel_axe", () -> new AllaySteelAxe(ItemTier.ALLAY_STEEL, 5.0F, -3.0F, defaultBuilder()));
-    public static final RegistryObject<Item> ALLAY_STEEL_PICKAXE = ITEMS.register("allay_steel_pickaxe", () -> new AllaySteelPickaxe(ItemTier.ALLAY_STEEL, 0, -2.8F, defaultBuilder()));
-    public static final RegistryObject<Item> ALLAY_STEEL_SHOVEL = ITEMS.register("allay_steel_shovel", () -> new AllaySteelShovel(ItemTier.ALLAY_STEEL, 0.5F, -3.0F, defaultBuilder()));
-    public static final RegistryObject<Item> ALLAY_STEEL_HOE = ITEMS.register("allay_steel_hoe", () -> new AllaySteelHoe(ItemTier.ALLAY_STEEL, -4, 0, defaultBuilder()));
-    public static final RegistryObject<Item> ALLAY_STEEL_HELMET = ITEMS.register("allay_steel_helmet", () -> new AllaySteelArmors(ArmorTier.ALLAY_STEEL, ArmorItem.Type.HELMET, defaultBuilder()));
-    public static final RegistryObject<Item> ALLAY_STEEL_CHESTPLATE = ITEMS.register("allay_steel_chestplate", () -> new AllaySteelArmors(ArmorTier.ALLAY_STEEL, ArmorItem.Type.CHESTPLATE, defaultBuilder()));
-    public static final RegistryObject<Item> ALLAY_STEEL_LEGGINGS = ITEMS.register("allay_steel_leggings", () -> new AllaySteelArmors(ArmorTier.ALLAY_STEEL, ArmorItem.Type.LEGGINGS, defaultBuilder()));
-    public static final RegistryObject<Item> ALLAY_STEEL_BOOTS = ITEMS.register("allay_steel_boots", () -> new AllaySteelArmors(ArmorTier.ALLAY_STEEL, ArmorItem.Type.BOOTS, defaultBuilder()));
-    public static final RegistryObject<Item> RAID_TERMINATOR = ITEMS.register("raid_terminator", () -> new RaidTerminator(ItemTier.ALLAY_STEEL, 2, -2.4F, defaultBuilder().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> ALLAY_STEEL_SWORD = ITEMS.register("allay_steel_sword", () -> new AllaySteelSword(ItemTier.ALLAY_STEEL, 2, -2.4F, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ALLAY_STEEL_AXE = ITEMS.register("allay_steel_axe", () -> new AllaySteelAxe(ItemTier.ALLAY_STEEL, 5.0F, -3.0F, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ALLAY_STEEL_PICKAXE = ITEMS.register("allay_steel_pickaxe", () -> new AllaySteelPickaxe(ItemTier.ALLAY_STEEL, 0, -2.8F, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ALLAY_STEEL_SHOVEL = ITEMS.register("allay_steel_shovel", () -> new AllaySteelShovel(ItemTier.ALLAY_STEEL, 0.5F, -3.0F, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ALLAY_STEEL_HOE = ITEMS.register("allay_steel_hoe", () -> new AllaySteelHoe(ItemTier.ALLAY_STEEL, -4, 0, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ALLAY_STEEL_HELMET = ITEMS.register("allay_steel_helmet", () -> new AllaySteelArmors(ArmorTier.ALLAY_STEEL, ArmorItem.Type.HELMET, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ALLAY_STEEL_CHESTPLATE = ITEMS.register("allay_steel_chestplate", () -> new AllaySteelArmors(ArmorTier.ALLAY_STEEL, ArmorItem.Type.CHESTPLATE, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ALLAY_STEEL_LEGGINGS = ITEMS.register("allay_steel_leggings", () -> new AllaySteelArmors(ArmorTier.ALLAY_STEEL, ArmorItem.Type.LEGGINGS, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ALLAY_STEEL_BOOTS = ITEMS.register("allay_steel_boots", () -> new AllaySteelArmors(ArmorTier.ALLAY_STEEL, ArmorItem.Type.BOOTS, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ALLAY_STEEL_SWORD_REINFORCED = ITEMS.register("allay_steel_sword_reinforced", () -> new AllaySteelSwordReinforced(ItemTier.ALLAY_STEEL, 4, -2.4F, defaultBuilder().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> RAID_TERMINATOR = ITEMS.register("raid_terminator", () -> new RaidTerminator(ItemTier.ALLAY_STEEL, 2, -2.4F, defaultBuilder().rarity(Rarity.EPIC).rarity(Rarity.UNCOMMON)));
 
     public static final RegistryObject<Item> OBSIDIAN_STEEL_SWORD = ITEMS.register("obsidian_sword", () -> new SwordItem(ItemTier.OBSIDIAN_STEEL, 2, -2.4F, defaultBuilder()));
     public static final RegistryObject<Item> OBSIDIAN_STEEL_AXE = ITEMS.register("obsidian_axe", () -> new AxeItem(ItemTier.OBSIDIAN_STEEL, 5.0F, -3.0F, defaultBuilder()));
@@ -139,6 +160,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> OBSIDIAN_STEEL_CHESTPLATE = ITEMS.register("obsidian_chestplate", () -> new ObsidianSteelArmor(ArmorTier.OBSIDIAN_STEEL, ArmorItem.Type.CHESTPLATE, defaultBuilder()));
     public static final RegistryObject<Item> OBSIDIAN_STEEL_LEGGINGS = ITEMS.register("obsidian_leggings", () -> new ObsidianSteelArmor(ArmorTier.OBSIDIAN_STEEL, ArmorItem.Type.LEGGINGS, defaultBuilder()));
     public static final RegistryObject<Item> OBSIDIAN_STEEL_BOOTS = ITEMS.register("obsidian_boots", () -> new ObsidianSteelArmor(ArmorTier.OBSIDIAN_STEEL, ArmorItem.Type.BOOTS, defaultBuilder()));
+    public static final RegistryObject<Item> OBSIDIAN_STEEL_SWORD_REINFORCED = ITEMS.register("obsidian_sword_reinforced", () -> new ObsidianSwordReinforced(ItemTier.OBSIDIAN_STEEL, 4, -2.4F, defaultBuilder().rarity(Rarity.RARE)));
 
     public static final RegistryObject<Item> DISC_SWORD = ITEMS.register("disc_sword", () -> new DiscSword(ItemTier.DISC, 2, -2.4F, defaultBuilder().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> DISC_AXE = ITEMS.register("disc_axe", () -> new DiscAxe(ItemTier.DISC, 5.0F, -3.0F, defaultBuilder().rarity(Rarity.UNCOMMON)));
@@ -151,7 +173,11 @@ public class ItemRegistry {
     public static final RegistryObject<Item> DUNGEON_HAMMER = ITEMS.register("dungeon_hammer", () -> new DungeonHammer(ItemTier.DUNGEON, 2, -2.4F, defaultBuilder().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> DUNGEON_AXE = ITEMS.register("dungeon_axe", () -> new DungeonAxe(ItemTier.DUNGEON, 5.0F, -3.0F, defaultBuilder().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> DUNGEON_PICKAXE = ITEMS.register("dungeon_pickaxe", () -> new DungeonPickaxe(ItemTier.DUNGEON, 0, -2.8F, defaultBuilder().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<Item> DUNGEON_SWORD_REINFORCED = ITEMS.register("dungeon_sword_reinforced", () -> new DungeonSwordReinforced(ItemTier.DUNGEON, 4, -2.4F, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> DUNGEON_HELMET = ITEMS.register("dungeon_helmet", () -> new DungeonArmor(ArmorTier.DUNGEON_STEEL, ArmorItem.Type.HELMET, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> DUNGEON_CHESTPLATE = ITEMS.register("dungeon_chestplate", () -> new DungeonArmor(ArmorTier.DUNGEON_STEEL, ArmorItem.Type.CHESTPLATE, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> DUNGEON_LEGGINGS = ITEMS.register("dungeon_leggings", () -> new DungeonArmor(ArmorTier.DUNGEON_STEEL, ArmorItem.Type.LEGGINGS, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> DUNGEON_BOOTS = ITEMS.register("dungeon_boots", () -> new DungeonArmor(ArmorTier.DUNGEON_STEEL, ArmorItem.Type.BOOTS, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> DUNGEON_SWORD_REINFORCED = ITEMS.register("dungeon_sword_reinforced", () -> new DungeonSwordReinforced(ItemTier.DUNGEON, 4, -2.4F, defaultBuilder().rarity(Rarity.EPIC)));
 
     public static final RegistryObject<Item> COPPER_SWORD = ITEMS.register("copper_sword", () -> new CopperSword(ItemTier.COPPER, 2, -2.4F, defaultBuilder()));
     public static final RegistryObject<Item> COPPER_AXE = ITEMS.register("copper_axe", () -> new CopperAxe(ItemTier.COPPER, 5.0F, -3.2F, defaultBuilder()));
@@ -173,38 +199,38 @@ public class ItemRegistry {
     public static final RegistryObject<Item> AMETHYST_LEGGINGS = ITEMS.register("amethyst_leggings", () -> new AmethystArmors(ArmorTier.AMETHYST, ArmorItem.Type.LEGGINGS, defaultBuilder()));
     public static final RegistryObject<Item> AMETHYST_BOOTS = ITEMS.register("amethyst_boots", () -> new AmethystArmors(ArmorTier.AMETHYST, ArmorItem.Type.BOOTS, defaultBuilder()));
 
-    public static final RegistryObject<Item> ECHOIUM_SWORD = ITEMS.register("echoium_sword", () -> new EchoiumSword(ItemTier.ECHOIUM, 2, -2.4F, defaultBuilder()));
-    public static final RegistryObject<Item> ECHOIUM_AXE = ITEMS.register("echoium_axe", () -> new EchoiumAxe(ItemTier.ECHOIUM, 5.0F, -3.0F, defaultBuilder()));
-    public static final RegistryObject<Item> ECHOIUM_PICKAXE = ITEMS.register("echoium_pickaxe", () -> new EchoiumPickaxe(ItemTier.ECHOIUM, 0, -2.8F, defaultBuilder()));
-    public static final RegistryObject<Item> ECHOIUM_SHOVEL = ITEMS.register("echoium_shovel", () -> new EchoiumShovel(ItemTier.ECHOIUM, 0.5F, -3.0F, defaultBuilder()));
-    public static final RegistryObject<Item> ECHOIUM_HOE = ITEMS.register("echoium_hoe", () -> new EchoiumHoe(ItemTier.ECHOIUM, -6, 0, defaultBuilder()));
-    public static final RegistryObject<Item> ECHOIUM_HELMET = ITEMS.register("echoium_helmet", () -> new EchoiumArmors(ArmorTier.ECHOIUM, ArmorItem.Type.HELMET, defaultBuilder()));
-    public static final RegistryObject<Item> ECHOIUM_CHESTPLATE = ITEMS.register("echoium_chestplate", () -> new EchoiumArmors(ArmorTier.ECHOIUM, ArmorItem.Type.CHESTPLATE, defaultBuilder()));
-    public static final RegistryObject<Item> ECHOIUM_LEGGINGS = ITEMS.register("echoium_leggings", () -> new EchoiumArmors(ArmorTier.ECHOIUM, ArmorItem.Type.LEGGINGS, defaultBuilder()));
-    public static final RegistryObject<Item> ECHOIUM_BOOTS = ITEMS.register("echoium_boots", () -> new EchoiumArmors(ArmorTier.ECHOIUM, ArmorItem.Type.BOOTS, defaultBuilder()));
-    public static final RegistryObject<Item> ECHOIUM_SWORD_REINFORCED = ITEMS.register("echoium_sword_reinforced", () -> new EchoiumSwordReinforced(ItemTier.ECHOIUM, 4, -2.4F, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> ECHOIUM_SWORD = ITEMS.register("echoium_sword", () -> new EchoiumSword(ItemTier.ECHOIUM, 2, -2.4F, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ECHOIUM_AXE = ITEMS.register("echoium_axe", () -> new EchoiumAxe(ItemTier.ECHOIUM, 5.0F, -3.0F, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ECHOIUM_PICKAXE = ITEMS.register("echoium_pickaxe", () -> new EchoiumPickaxe(ItemTier.ECHOIUM, 0, -2.8F, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ECHOIUM_SHOVEL = ITEMS.register("echoium_shovel", () -> new EchoiumShovel(ItemTier.ECHOIUM, 0.5F, -3.0F, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ECHOIUM_HOE = ITEMS.register("echoium_hoe", () -> new EchoiumHoe(ItemTier.ECHOIUM, -6, 0, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ECHOIUM_HELMET = ITEMS.register("echoium_helmet", () -> new EchoiumArmors(ArmorTier.ECHOIUM, ArmorItem.Type.HELMET, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ECHOIUM_CHESTPLATE = ITEMS.register("echoium_chestplate", () -> new EchoiumArmors(ArmorTier.ECHOIUM, ArmorItem.Type.CHESTPLATE, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ECHOIUM_LEGGINGS = ITEMS.register("echoium_leggings", () -> new EchoiumArmors(ArmorTier.ECHOIUM, ArmorItem.Type.LEGGINGS, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ECHOIUM_BOOTS = ITEMS.register("echoium_boots", () -> new EchoiumArmors(ArmorTier.ECHOIUM, ArmorItem.Type.BOOTS, defaultBuilder().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ECHOIUM_SWORD_REINFORCED = ITEMS.register("echoium_sword_reinforced", () -> new EchoiumSwordReinforced(ItemTier.ECHOIUM, 4, -2.4F, defaultBuilder().rarity(Rarity.EPIC)));
 
-    public static final RegistryObject<Item> PRIMITIVE_SWORD = ITEMS.register("primitive_sword", () -> new PrimitiveSword(ItemTier.PRIMITIVE, 7, -3.2F, defaultBuilder()));
-    public static final RegistryObject<Item> PRIMITIVE_AXE = ITEMS.register("primitive_axe", () -> new PrimitiveAxe(ItemTier.PRIMITIVE, 15, -3.7F, defaultBuilder()));
-    public static final RegistryObject<Item> PRIMITIVE_PICKAXE = ITEMS.register("primitive_pickaxe", () -> new PrimitivePickaxe(ItemTier.PRIMITIVE, 0, -3.4F, defaultBuilder()));
-    public static final RegistryObject<Item> PRIMITIVE_SHOVEL = ITEMS.register("primitive_shovel", () -> new PrimitiveShovel(ItemTier.PRIMITIVE, 3, -3.6F, defaultBuilder()));
-    public static final RegistryObject<Item> PRIMITIVE_HOE = ITEMS.register("primitive_hoe", () -> new PrimitiveHoe(ItemTier.PRIMITIVE, -18, -2, defaultBuilder()));
-    public static final RegistryObject<Item> PRIMITIVE_HELMET = ITEMS.register("primitive_helmet", () -> new PrimitiveArmors(ArmorTier.PRIMITIVE, ArmorItem.Type.HELMET, defaultBuilder()));
-    public static final RegistryObject<Item> PRIMITIVE_CHESTPLATE = ITEMS.register("primitive_chestplate", () -> new PrimitiveArmors(ArmorTier.PRIMITIVE, ArmorItem.Type.CHESTPLATE, defaultBuilder()));
-    public static final RegistryObject<Item> PRIMITIVE_LEGGINGS = ITEMS.register("primitive_leggings", () -> new PrimitiveArmors(ArmorTier.PRIMITIVE, ArmorItem.Type.LEGGINGS, defaultBuilder()));
-    public static final RegistryObject<Item> PRIMITIVE_BOOTS = ITEMS.register("primitive_boots", () -> new PrimitiveArmors(ArmorTier.PRIMITIVE, ArmorItem.Type.BOOTS, defaultBuilder()));
-    public static final RegistryObject<Item> PRIMITIVE_SWORD_REINFORCED = ITEMS.register("primitive_sword_reinforced", () -> new PrimitiveSwordReinforced(ItemTier.PRIMITIVE, 15, -3.2F, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> PRIMITIVE_SWORD = ITEMS.register("primitive_sword", () -> new PrimitiveSword(ItemTier.PRIMITIVE, 7, -3.2F, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> PRIMITIVE_AXE = ITEMS.register("primitive_axe", () -> new PrimitiveAxe(ItemTier.PRIMITIVE, 15, -3.7F, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> PRIMITIVE_PICKAXE = ITEMS.register("primitive_pickaxe", () -> new PrimitivePickaxe(ItemTier.PRIMITIVE, 0, -3.4F, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> PRIMITIVE_SHOVEL = ITEMS.register("primitive_shovel", () -> new PrimitiveShovel(ItemTier.PRIMITIVE, 3, -3.6F, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> PRIMITIVE_HOE = ITEMS.register("primitive_hoe", () -> new PrimitiveHoe(ItemTier.PRIMITIVE, -18, -2, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> PRIMITIVE_HELMET = ITEMS.register("primitive_helmet", () -> new PrimitiveArmors(ArmorTier.PRIMITIVE, ArmorItem.Type.HELMET, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> PRIMITIVE_CHESTPLATE = ITEMS.register("primitive_chestplate", () -> new PrimitiveArmors(ArmorTier.PRIMITIVE, ArmorItem.Type.CHESTPLATE, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> PRIMITIVE_LEGGINGS = ITEMS.register("primitive_leggings", () -> new PrimitiveArmors(ArmorTier.PRIMITIVE, ArmorItem.Type.LEGGINGS, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> PRIMITIVE_BOOTS = ITEMS.register("primitive_boots", () -> new PrimitiveArmors(ArmorTier.PRIMITIVE, ArmorItem.Type.BOOTS, defaultBuilder().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> PRIMITIVE_SWORD_REINFORCED = ITEMS.register("primitive_sword_reinforced", () -> new PrimitiveSwordReinforced(ItemTier.PRIMITIVE, 15, -3.2F, defaultBuilder().rarity(Rarity.EPIC)));
 
-    public static final RegistryObject<Item> VANITATIUM_SWORD = ITEMS.register("vanitatium_sword", () -> new VanitatiumSword(ItemTier.VANITATIUM, 2, -2.4F, defaultBuilder(), ItemRegistry.AMETHYST_SWORD.get()));
-    public static final RegistryObject<Item> VANITATIUM_AXE = ITEMS.register("vanitatium_axe", () -> new VanitatiumAxe(ItemTier.VANITATIUM, 5.0F, -3.0F, defaultBuilder(), ItemRegistry.AMETHYST_AXE.get()));
-    public static final RegistryObject<Item> VANITATIUM_PICKAXE = ITEMS.register("vanitatium_pickaxe", () -> new VanitatiumPickaxe(ItemTier.VANITATIUM, 0, -2.8F, defaultBuilder(), ItemRegistry.AMETHYST_PICKAXE.get()));
-    public static final RegistryObject<Item> VANITATIUM_SHOVEL = ITEMS.register("vanitatium_shovel", () -> new VanitatiumShovel(ItemTier.VANITATIUM, 1, -3.0F, defaultBuilder(), ItemRegistry.AMETHYST_SHOVEL.get()));
-    public static final RegistryObject<Item> VANITATIUM_HOE = ITEMS.register("vanitatium_hoe", () -> new VanitatiumHoe(ItemTier.VANITATIUM, -10, 0, defaultBuilder(), ItemRegistry.AMETHYST_HOE.get()));
-    public static final RegistryObject<Item> VANITATIUM_HELMET = ITEMS.register("vanitatium_helmet", () -> new VanitatiumArmors(ArmorTier.VANITATIUM, ArmorItem.Type.HELMET, defaultBuilder(), ItemRegistry.AMETHYST_HELMET.get()));
-    public static final RegistryObject<Item> VANITATIUM_CHESTPLATE = ITEMS.register("vanitatium_chestplate", () -> new VanitatiumArmors(ArmorTier.VANITATIUM, ArmorItem.Type.CHESTPLATE, defaultBuilder(), ItemRegistry.AMETHYST_CHESTPLATE.get()));
-    public static final RegistryObject<Item> VANITATIUM_LEGGINGS = ITEMS.register("vanitatium_leggings", () -> new VanitatiumArmors(ArmorTier.VANITATIUM, ArmorItem.Type.LEGGINGS, defaultBuilder(), ItemRegistry.AMETHYST_LEGGINGS.get()));
-    public static final RegistryObject<Item> VANITATIUM_BOOTS = ITEMS.register("vanitatium_boots", () -> new VanitatiumArmors(ArmorTier.VANITATIUM, ArmorItem.Type.BOOTS, defaultBuilder(), ItemRegistry.AMETHYST_BOOTS.get()));
-    public static final RegistryObject<Item> VANITATIUM_SWORD_REINFORCED = ITEMS.register("vanitatium_sword_reinforced", () -> new VanitatiumSwordReinforced(ItemTier.VANITATIUM, 4, -2.4F, defaultBuilder().rarity(Rarity.RARE), ItemRegistry.AMETHYST_SWORD.get()));
+    public static final RegistryObject<Item> VANITATIUM_SWORD = ITEMS.register("vanitatium_sword", () -> new VanitatiumSword(ItemTier.VANITATIUM, 2, -2.4F, defaultBuilder().rarity(Rarity.RARE), ItemRegistry.AMETHYST_SWORD.get()));
+    public static final RegistryObject<Item> VANITATIUM_AXE = ITEMS.register("vanitatium_axe", () -> new VanitatiumAxe(ItemTier.VANITATIUM, 5.0F, -3.0F, defaultBuilder().rarity(Rarity.RARE), ItemRegistry.AMETHYST_AXE.get()));
+    public static final RegistryObject<Item> VANITATIUM_PICKAXE = ITEMS.register("vanitatium_pickaxe", () -> new VanitatiumPickaxe(ItemTier.VANITATIUM, 0, -2.8F, defaultBuilder().rarity(Rarity.RARE), ItemRegistry.AMETHYST_PICKAXE.get()));
+    public static final RegistryObject<Item> VANITATIUM_SHOVEL = ITEMS.register("vanitatium_shovel", () -> new VanitatiumShovel(ItemTier.VANITATIUM, 1, -3.0F, defaultBuilder().rarity(Rarity.RARE), ItemRegistry.AMETHYST_SHOVEL.get()));
+    public static final RegistryObject<Item> VANITATIUM_HOE = ITEMS.register("vanitatium_hoe", () -> new VanitatiumHoe(ItemTier.VANITATIUM, -10, 0, defaultBuilder().rarity(Rarity.RARE), ItemRegistry.AMETHYST_HOE.get()));
+    public static final RegistryObject<Item> VANITATIUM_HELMET = ITEMS.register("vanitatium_helmet", () -> new VanitatiumArmors(ArmorTier.VANITATIUM, ArmorItem.Type.HELMET, defaultBuilder().rarity(Rarity.RARE), ItemRegistry.AMETHYST_HELMET.get()));
+    public static final RegistryObject<Item> VANITATIUM_CHESTPLATE = ITEMS.register("vanitatium_chestplate", () -> new VanitatiumArmors(ArmorTier.VANITATIUM, ArmorItem.Type.CHESTPLATE, defaultBuilder().rarity(Rarity.RARE), ItemRegistry.AMETHYST_CHESTPLATE.get()));
+    public static final RegistryObject<Item> VANITATIUM_LEGGINGS = ITEMS.register("vanitatium_leggings", () -> new VanitatiumArmors(ArmorTier.VANITATIUM, ArmorItem.Type.LEGGINGS, defaultBuilder().rarity(Rarity.RARE), ItemRegistry.AMETHYST_LEGGINGS.get()));
+    public static final RegistryObject<Item> VANITATIUM_BOOTS = ITEMS.register("vanitatium_boots", () -> new VanitatiumArmors(ArmorTier.VANITATIUM, ArmorItem.Type.BOOTS, defaultBuilder().rarity(Rarity.RARE), ItemRegistry.AMETHYST_BOOTS.get()));
+    public static final RegistryObject<Item> VANITATIUM_SWORD_REINFORCED = ITEMS.register("vanitatium_sword_reinforced", () -> new VanitatiumSwordReinforced(ItemTier.VANITATIUM, 4, -2.4F, defaultBuilder().rarity(Rarity.EPIC), ItemRegistry.AMETHYST_SWORD.get()));
 
     public static final RegistryObject<Item> FLINT_SWORD = ITEMS.register("flint_sword", () -> new SwordItem(ItemTier.FLINT, 2, -2.4F, defaultBuilder()));
     public static final RegistryObject<Item> FLINT_AXE = ITEMS.register("flint_axe", () -> new AxeItem(ItemTier.FLINT, 5.0F, -3.2F, defaultBuilder()));
@@ -223,7 +249,7 @@ public class ItemRegistry {
         return new Item.Properties();
     }
 
-    private static List<ResourceLocation> createEtheriteUpgradeIconList() {
+    private static List<ResourceLocation> createArmorUpgradeIconList() {
         return List.of(
                 new ResourceLocation("item/empty_armor_slot_helmet"),
                 new ResourceLocation("item/empty_armor_slot_chestplate"),
@@ -231,7 +257,28 @@ public class ItemRegistry {
                 new ResourceLocation("item/empty_armor_slot_boots"));
     }
 
+    private static List<ResourceLocation> createCommonUpgradeIconList() {
+        return List.of(
+                new ResourceLocation("item/empty_armor_slot_helmet"),
+                new ResourceLocation("item/empty_armor_slot_chestplate"),
+                new ResourceLocation("item/empty_armor_slot_leggings"),
+                new ResourceLocation("item/empty_armor_slot_boots"),
+                new ResourceLocation("item/empty_slot_hoe"),
+                new ResourceLocation("item/empty_slot_axe"),
+                new ResourceLocation("item/empty_slot_sword"),
+                new ResourceLocation("item/empty_slot_shovel"),
+                new ResourceLocation("item/empty_slot_pickaxe"));
+    }
+
     private static List<ResourceLocation> createEtheriteUpgradeMaterialList() {
         return List.of(new ResourceLocation("item/empty_slot_ingot"));
+    }
+
+    private static List<ResourceLocation> createPrimitiveUpgradeMaterialList() {
+        return List.of(new ResourceLocation("composite_material:item/empty_slot_primitive"));
+    }
+
+    private static List<ResourceLocation> createVanitaiumUpgradeMaterialList() {
+        return List.of(new ResourceLocation("composite_material:item/empty_slot_vanitatium"));
     }
 }

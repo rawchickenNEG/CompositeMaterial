@@ -4,6 +4,7 @@ import io.github.rcneg.compositematerial.common.helper.EntityHelper;
 import io.github.rcneg.compositematerial.common.init.ItemRegistry;
 import io.github.rcneg.compositematerial.common.init.PotionEffectRegistry;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -11,6 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -45,6 +47,32 @@ public class HealEvents {
         if(entity.hasEffect(PotionEffectRegistry.DEGENERATION.get())){
             entity.playSound(SoundEvents.FIRE_EXTINGUISH,0.1F , 0.8F);
             event.setCanceled(true);
+        }
+    }
+
+    //地牢甲增加恢复量
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public static void addHealingAmount(LivingHealEvent event){
+        LivingEntity entity = event.getEntity();
+        if(        entity.getItemBySlot(EquipmentSlot.HEAD).is(ItemRegistry.DUNGEON_HELMET.get())
+                || entity.getItemBySlot(EquipmentSlot.CHEST).is(ItemRegistry.DUNGEON_CHESTPLATE.get())
+                || entity.getItemBySlot(EquipmentSlot.LEGS).is(ItemRegistry.DUNGEON_LEGGINGS.get())
+                || entity.getItemBySlot(EquipmentSlot.FEET).is(ItemRegistry.DUNGEON_BOOTS.get()))
+        {
+            int res = 0;
+            if(entity.getItemBySlot(EquipmentSlot.HEAD).is(ItemRegistry.DUNGEON_HELMET.get())){
+                res++;
+            }
+            if(entity.getItemBySlot(EquipmentSlot.CHEST).is(ItemRegistry.DUNGEON_CHESTPLATE.get())){
+                res++;
+            }
+            if(entity.getItemBySlot(EquipmentSlot.LEGS).is(ItemRegistry.DUNGEON_LEGGINGS.get())){
+                res++;
+            }
+            if(entity.getItemBySlot(EquipmentSlot.FEET).is(ItemRegistry.DUNGEON_BOOTS.get())){
+                res++;
+            }
+            event.setAmount(event.getAmount() * (float)(1.0 + (res * 0.25)));
         }
     }
 }

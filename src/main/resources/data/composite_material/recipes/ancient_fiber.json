@@ -15,6 +15,7 @@
     }
   ],
   "result": {
-    "item": "composite_material:ancient_fiber"
+    "item": "composite_material:ancient_fiber",
+    "count": 3
   }
 }

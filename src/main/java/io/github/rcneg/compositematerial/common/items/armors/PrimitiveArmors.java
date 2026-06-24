@@ -48,10 +48,11 @@ public class PrimitiveArmors extends CMArmorItems {
         builder.putAll(this.getDefaultAttributeModifiers(slot));
         if (slot == EquipmentSlot.HEAD && stack.is(ItemRegistry.PRIMITIVE_HELMET.get())) {
             builder.put(Attributes.MAX_HEALTH, new AttributeModifier(UUID.fromString("12345678-8975-1244-7120-719895176262"), "primitive_armor_add_health", 14D, AttributeModifier.Operation.ADDITION));
+            builder.put(ForgeMod.BLOCK_REACH.get(), new AttributeModifier(UUID.fromString("8d673084-aa28-45c5-85a2-092edf85f2f9"), "primitive_block_reach", 1D, AttributeModifier.Operation.ADDITION));
+            builder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(UUID.fromString("3ba23bf3-5869-4856-8735-5d7d618f276a"), "primitive_entity_reach", 1D, AttributeModifier.Operation.ADDITION));
         } else if (slot == EquipmentSlot.CHEST && stack.is(ItemRegistry.PRIMITIVE_CHESTPLATE.get())) {
             builder.put(Attributes.MAX_HEALTH, new AttributeModifier(UUID.fromString("12345678-4143-6188-5454-445682774164"), "primitive_armor_add_health", 18D, AttributeModifier.Operation.ADDITION));
-            builder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(UUID.fromString("12345678-2358-1274-2343-939481542424"), "primitive_armor_add_reach_1", 1D, AttributeModifier.Operation.ADDITION));
-            builder.put(ForgeMod.BLOCK_REACH.get(), new AttributeModifier(UUID.fromString("12345678-2358-1274-2343-948154242493"), "primitive_armor_add_reach_2", 1D, AttributeModifier.Operation.ADDITION));
+            builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(UUID.fromString("42659a64-3ad4-4144-b7c5-2ccb6b2be8b6"), "primitive_atk_damage", 0.75D, AttributeModifier.Operation.MULTIPLY_BASE));
         } else if (slot == EquipmentSlot.LEGS && stack.is(ItemRegistry.PRIMITIVE_LEGGINGS.get())) {
             builder.put(Attributes.MAX_HEALTH, new AttributeModifier(UUID.fromString("12345678-8717-1264-0999-362966170523"), "primitive_armor_add_health", 16D, AttributeModifier.Operation.ADDITION));
         } else if (slot == EquipmentSlot.FEET && stack.is(ItemRegistry.PRIMITIVE_BOOTS.get())) {

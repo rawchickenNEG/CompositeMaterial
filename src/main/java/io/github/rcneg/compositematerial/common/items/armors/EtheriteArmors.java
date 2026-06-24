@@ -53,7 +53,7 @@ public class EtheriteArmors extends CMArmorItems {
             builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(UUID.fromString("12345678-4143-6188-5454-821136036032"), "etherite_chest_add_attack", 0.7D, AttributeModifier.Operation.MULTIPLY_BASE));
         } else if (slot == EquipmentSlot.LEGS && stack.is(ItemRegistry.ETHERITE_LEGGINGS.get())) {
             builder.put(Attributes.MAX_HEALTH, new AttributeModifier(UUID.fromString("12345678-8717-1264-0999-548882903870"), "etherite_armor_add_health", 5D, AttributeModifier.Operation.ADDITION));
-            builder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(UUID.fromString("12345678-8717-1264-0999-254449325829"), "etherite_leggings_add_step", 3D, AttributeModifier.Operation.ADDITION));
+            builder.put(ForgeMod.STEP_HEIGHT_ADDITION.get(), new AttributeModifier(UUID.fromString("12345678-8717-1264-0999-254449325829"), "etherite_leggings_add_step", 0.5D, AttributeModifier.Operation.ADDITION));
         } else if (slot == EquipmentSlot.FEET && stack.is(ItemRegistry.ETHERITE_BOOTS.get())) {
             builder.put(Attributes.MAX_HEALTH, new AttributeModifier(UUID.fromString("12345678-2358-1274-2343-213601639069"), "etherite_armor_add_health", 4D, AttributeModifier.Operation.ADDITION));
             builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(UUID.fromString("12345678-2358-1274-2343-256643988120"), "etherite_boots_add_speed", 0.2D, AttributeModifier.Operation.MULTIPLY_BASE));

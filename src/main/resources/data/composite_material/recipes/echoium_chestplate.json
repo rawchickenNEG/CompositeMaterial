@@ -9,9 +9,9 @@
     }
   },
   "pattern": [
-    "1 1",
-    "212",
-    "121"
+    "2 2",
+    "121",
+    "111"
   ],
   "result": {
     "item": "composite_material:echoium_chestplate"

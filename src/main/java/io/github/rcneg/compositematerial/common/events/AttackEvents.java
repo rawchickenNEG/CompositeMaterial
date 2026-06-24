@@ -19,10 +19,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -36,10 +35,10 @@ import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -54,7 +53,6 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Mod.EventBusSubscriber
 public class AttackEvents {
@@ -203,17 +201,15 @@ public class AttackEvents {
                         final Vec3 center = EntityHelper.getVec3(entity);
                         AABB aabb = new AABB(center, center).inflate(Config.ALLAY_ATTACK_RANGE.get());
                         List<LivingEntity> entities = entity.level().getEntitiesOfClass(LivingEntity.class, aabb, e -> e != entity && e.isAlive() && e.getType() == entity.getType());
-                        if(source instanceof Player player && event.getSource().is(DamageTypes.PLAYER_ATTACK)){
+                        if(!event.getSource().is(DamageTypes.INDIRECT_MAGIC)){
                             for (LivingEntity target : entities) {
-                                target.invulnerableTime = 0;
-                                target.hurt(level.damageSources().indirectMagic(player, player), event.getAmount());
-                                weapon.hurtAndBreak(Config.ALLAY_ATTACK_DAMAGE.get() ? 1 : 0, source, (p_40665_) -> p_40665_.broadcastBreakEvent(source.getUsedItemHand()));
-                            }
-                        }
-                        if(source instanceof Mob mob && event.getSource().is(DamageTypes.MOB_ATTACK)){
-                            for (LivingEntity target : entities) {
-                                target.invulnerableTime = 0;
-                                target.hurt(level.damageSources().indirectMagic(mob, mob), event.getAmount());
+                                if(weapon.is(ItemRegistry.ALLAY_STEEL_SWORD_REINFORCED.get())){
+                                    entity.invulnerableTime = 0;
+                                    entity.hurt(level.damageSources().indirectMagic(source, source), event.getAmount());
+                                }else{
+                                    target.invulnerableTime = 0;
+                                    target.hurt(level.damageSources().indirectMagic(source, source), event.getAmount());
+                                }
                                 weapon.hurtAndBreak(Config.ALLAY_ATTACK_DAMAGE.get() ? 1 : 0, source, (p_40665_) -> p_40665_.broadcastBreakEvent(source.getUsedItemHand()));
                             }
                         }
@@ -248,6 +244,29 @@ public class AttackEvents {
                 }
                 if(event.getSource().is(DamageTypeTags.WITCH_RESISTANT_TO)){
                     event.setAmount(event.getAmount() * (float)(1.0 - (res * 0.15)));
+                }
+            }
+            //幻灭套魔法爆炸弹射物减免
+            if(        entity.getItemBySlot(EquipmentSlot.HEAD).is(ItemRegistry.VANITATIUM_HELMET.get())
+                    || entity.getItemBySlot(EquipmentSlot.CHEST).is(ItemRegistry.VANITATIUM_CHESTPLATE.get())
+                    || entity.getItemBySlot(EquipmentSlot.LEGS).is(ItemRegistry.VANITATIUM_LEGGINGS.get())
+                    || entity.getItemBySlot(EquipmentSlot.FEET).is(ItemRegistry.VANITATIUM_BOOTS.get()))
+            {
+                int res = 0;
+                if(entity.getItemBySlot(EquipmentSlot.HEAD).is(ItemRegistry.VANITATIUM_HELMET.get())){
+                    res++;
+                }
+                if(entity.getItemBySlot(EquipmentSlot.CHEST).is(ItemRegistry.VANITATIUM_CHESTPLATE.get())){
+                    res++;
+                }
+                if(entity.getItemBySlot(EquipmentSlot.LEGS).is(ItemRegistry.VANITATIUM_LEGGINGS.get())){
+                    res++;
+                }
+                if(entity.getItemBySlot(EquipmentSlot.FEET).is(ItemRegistry.VANITATIUM_BOOTS.get())){
+                    res++;
+                }
+                if(event.getSource().is(DamageTypeTags.WITCH_RESISTANT_TO) || event.getSource().is(DamageTypeTags.IS_EXPLOSION) || event.getSource().is(DamageTypeTags.IS_PROJECTILE) || event.getSource().getDirectEntity() instanceof Projectile){
+                    event.setAmount(event.getAmount() * (float)(1.0 - (res * 0.2)));
                 }
             }
             //荒古套直接伤害减免
@@ -289,17 +308,6 @@ public class AttackEvents {
                 EntityHelper.getPlayerAttackStrengthAndPlaySound(source, d0, SoundEvents.PHANTOM_BITE);
                 source.heal(d0);
             }
-            //荒芜增强debuff
-            if (weapon.is(ItemRegistry.PRIMITIVE_SWORD_REINFORCED.get())){
-                List<MobEffectInstance> list = new ArrayList<>(entity.getActiveEffects().stream().filter(e -> e.getEffect().getCategory() == MobEffectCategory.HARMFUL).toList());
-                for (MobEffectInstance ins : list) {
-                    if (ins.getDuration() < 3600 && ins.getDuration() > 0){
-                        entity.addEffect(new MobEffectInstance(ins.getEffect(), ins.getDuration() * 2, ins.getAmplifier(), ins.isAmbient(), ins.isVisible()));
-                        continue;
-                    }
-                    entity.addEffect(new MobEffectInstance(ins.getEffect(), -1, ins.getAmplifier(), true, ins.isVisible()));
-                }
-            }
 
             if(source instanceof Player player){
                 AABB aabb = player.getBoundingBox().inflate(35);
@@ -336,13 +344,10 @@ public class AttackEvents {
     }
     //不毁图腾
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void etheriteTotem(LivingHurtEvent event){
+    public static void etheriteTotem(LivingDeathEvent event){
         LivingEntity entity = event.getEntity();
         Level level = entity.level();
         if (level.isClientSide()) return;
-
-        float damage = event.getAmount();
-        if (entity.getHealth() > damage) return;
         if(event.getSource().is(DamageTypes.GENERIC_KILL)) return;
 
         ItemStack totemStack = ItemStack.EMPTY;
@@ -389,13 +394,10 @@ public class AttackEvents {
     }
     //幻灭套
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void vanitatiumArmorsDefense(LivingHurtEvent event){
+    public static void vanitatiumArmorsDefense(LivingDeathEvent event){
         LivingEntity entity = event.getEntity();
         Level level = entity.level();
         if (level.isClientSide()) return;
-
-        float damage = event.getAmount();
-        if (entity.getHealth() > damage) return;
         if(event.getSource().is(DamageTypes.GENERIC_KILL)) return;
 
         if(entity instanceof ServerPlayer player){
@@ -405,6 +407,7 @@ public class AttackEvents {
                     if(armor.hurt(20, level.getRandom(), player)){
                         level.explode(player, player.getX(), player.getY(), player.getZ(), 6, Level.ExplosionInteraction.NONE);
                         EntityHelper.randomTeleport(level, player);
+                        player.setHealth(1);
                         event.setCanceled(true);
                         break;
                     }
@@ -615,6 +618,24 @@ public class AttackEvents {
                 //强化以太剑强化攻击
                 if (weapon.is(ItemRegistry.ETHERITE_SWORD_REINFORCED.get())){
                     weapon.getOrCreateTag().putInt("EtheriteAddition", Math.round(entity.getMaxHealth()));
+                }
+                //荒古剑强化
+                if(true) {
+                    LivingEntity target = event.getEntity();
+                    if (weapon.is(ItemRegistry.PRIMITIVE_SWORD_REINFORCED.get())) {
+                        ListTag list = weapon.getOrCreateTag().getList("PrimitiveAddition", Tag.TAG_STRING);
+                        ListTag newList = list.copy();
+                        for(MobEffect effect : target.getActiveEffectsMap().keySet()){
+                            if(!newList.contains(StringTag.valueOf(effect.getDescriptionId()))){
+                                newList.add(StringTag.valueOf(effect.getDescriptionId()));
+                            }
+                        }
+                        if(list.size() < newList.size()){
+                            source.level().playSound(null, source.getOnPos(), SoundEvents.BEACON_ACTIVATE, SoundSource.NEUTRAL, 1, 1);
+                        }
+                        if(source instanceof Player player) player.displayClientMessage(Component.literal(newList.toString()), true);
+                        weapon.getOrCreateTag().put("PrimitiveAddition", newList);
+                    }
                 }
             }
         }

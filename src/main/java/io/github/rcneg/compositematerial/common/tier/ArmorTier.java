@@ -35,6 +35,12 @@ public enum ArmorTier implements ArmorMaterial {
         armor.put(ArmorItem.Type.CHESTPLATE, 8);
         armor.put(ArmorItem.Type.HELMET, 3);
     }), 25, SoundEvents.ARMOR_EQUIP_IRON, 2.0F, 0.0F, Ingredient.of(ItemRegistry.OBSIDIAN_STEEL_INGOT.get())),
+    DUNGEON_STEEL("dungeon", 35, Util.make(new EnumMap<>(ArmorItem.Type.class), armor -> {
+        armor.put(ArmorItem.Type.BOOTS, 3);
+        armor.put(ArmorItem.Type.LEGGINGS, 6);
+        armor.put(ArmorItem.Type.CHESTPLATE, 8);
+        armor.put(ArmorItem.Type.HELMET, 3);
+    }), 25, SoundEvents.ARMOR_EQUIP_IRON, 2.0F, 0.0F, Ingredient.of(ItemRegistry.DUNGEON_STEEL_INGOT.get())),
     ALLAY_STEEL("allay_steel", 25, Util.make(new EnumMap<>(ArmorItem.Type.class), armor -> {
         armor.put(ArmorItem.Type.BOOTS, 3);
         armor.put(ArmorItem.Type.LEGGINGS, 6);

@@ -4,6 +4,8 @@ import io.github.rcneg.compositematerial.common.accessor.IVanitatiumReplaceable;
 import io.github.rcneg.compositematerial.common.config.Config;
 import io.github.rcneg.compositematerial.common.helper.EntityHelper;
 import io.github.rcneg.compositematerial.common.init.ItemRegistry;
+import io.github.rcneg.compositematerial.common.items.armors.EtheriteArmors;
+import io.github.rcneg.compositematerial.common.items.armors.VanitatiumArmors;
 import io.github.rcneg.compositematerial.common.tags.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -41,6 +43,7 @@ import net.minecraft.world.level.block.SculkShriekerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
+import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -96,18 +99,28 @@ public class InteractEvents {
     public static void onEquipmentChange(LivingEquipmentChangeEvent event) {
         if(event.getEntity() instanceof Player player){
             if (!player.isCreative() && !player.isSpectator() && event.getSlot().isArmor()) {
-                //以太护甲没有全套时可以使用其他飞行，移除护甲时暂时取消飞行
-                if(player.getItemBySlot(EquipmentSlot.HEAD).is(ItemRegistry.ETHERITE_HELMET.get()) || player.getItemBySlot(EquipmentSlot.CHEST).is(ItemRegistry.ETHERITE_CHESTPLATE.get()) || player.getItemBySlot(EquipmentSlot.LEGS).is(ItemRegistry.ETHERITE_LEGGINGS.get()) || player.getItemBySlot(EquipmentSlot.FEET).is(ItemRegistry.ETHERITE_BOOTS.get())){
-                    if (!(player.getItemBySlot(EquipmentSlot.HEAD).is(ItemRegistry.ETHERITE_HELMET.get()) && player.getItemBySlot(EquipmentSlot.LEGS).is(ItemRegistry.ETHERITE_LEGGINGS.get()) && player.getItemBySlot(EquipmentSlot.FEET).is(ItemRegistry.ETHERITE_BOOTS.get()) && player.getItemBySlot(EquipmentSlot.CHEST).is(ItemRegistry.ETHERITE_CHESTPLATE.get()))) {
-                        player.getAbilities().mayfly = false;
-                        player.getAbilities().flying = false;
-                        player.onUpdateAbilities();
-                    }
+                //以太套取消飞行
+                if(event.getFrom().getItem() instanceof EtheriteArmors && !(event.getTo().getItem() instanceof EtheriteArmors)){
+                    player.getAbilities().mayfly = false;
+                    player.getAbilities().flying = false;
+                    player.onUpdateAbilities();
+                }
+                //幻灭套飞行
+                if(event.getFrom().getItem() instanceof VanitatiumArmors && !event.getFrom().isEnchanted()){
+                    player.getAbilities().mayfly = false;
+                    player.getAbilities().flying = false;
+                    player.onUpdateAbilities();
+                }
+                if(event.getTo().getItem() instanceof VanitatiumArmors && !event.getTo().isEnchanted()){
+                    player.getAbilities().mayfly = true;
+                    player.getAbilities().flying = true;
+                    player.onUpdateAbilities();
                 }
             }
         }
     }
 
+    /*监守者用的不是setTarget的系统所以弃用，转为mixin
     @SubscribeEvent
     public static void onEntitySetsAttackTarget(LivingChangeTargetEvent event) {
         if(event.getOriginalTarget() != null) {
@@ -122,6 +135,7 @@ public class InteractEvents {
             }
         }
     }
+     */
 
     @SubscribeEvent
     public static void modifyFlyingBreakSpeed(PlayerEvent.BreakSpeed event) {
@@ -142,13 +156,21 @@ public class InteractEvents {
     }
 
     @SubscribeEvent
+    public static void anvilBreakEvent(AnvilRepairEvent event) {
+        if(event.getLeft().is(ModTags.ANVIL_BREAK_ITEMS)){
+            event.setBreakChance(1F);
+        }
+    }
+
+    @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         BlockPos pos = event.getPos();
         ItemStack item = event.getPlayer().getMainHandItem();
         Level level = event.getPlayer().level();
+        BlockState state = event.getState();
         //悦灵工具范围采集
         if (Config.ALLAY_BREAK_SPEC.get()) {
-            if (item.is(ModTags.ALLAY_STEEL_TOOLS) && !event.getPlayer().isCrouching() && (!event.getState().hasBlockEntity() || Config.ALLAY_BREAK_WITH_ENTITY.get())) {
+            if (item.is(ModTags.ALLAY_STEEL_TOOLS) && !event.getPlayer().isCrouching()) {
                 int n0 = 1;
                 int n1 = 0;
                 int lim = Config.ALLAY_BREAK_LIMIT.get();
@@ -192,7 +214,7 @@ public class InteractEvents {
                     BlockPos selectpos = (BlockPos) o;
                     BlockState block = level.getBlockState(selectpos);
                     if (!event.getPlayer().getAbilities().instabuild) {
-                        Block.dropResources(block, level, pos, null, event.getPlayer(), item);
+                        Block.dropResources(block, level, pos, level.getBlockEntity(selectpos), event.getPlayer(), item);
                     }
                     level.setBlock(selectpos, Blocks.AIR.defaultBlockState(), 3);
                     des++;
@@ -231,7 +253,7 @@ public class InteractEvents {
 
          */
         //唱片镐挖矿
-        if (item.is(ItemRegistry.DISC_PICKAXE.get()) && (level.getBlockState(pos).is(BlockTags.STONE_ORE_REPLACEABLES) || level.getBlockState(pos).is(BlockTags.DEEPSLATE_ORE_REPLACEABLES))){
+        if (item.is(ItemRegistry.DISC_PICKAXE.get()) && (state.is(BlockTags.STONE_ORE_REPLACEABLES) || level.getBlockState(pos).is(BlockTags.DEEPSLATE_ORE_REPLACEABLES))){
             int ench = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.BLOCK_FORTUNE, item);
             if (Math.random() <= (float)(Config.DISC_PICKAXE_BASE.get() / 100) + ench * (float)(Config.DISC_PICKAXE_ENCH.get() / 100)){
                 Item ore;
@@ -244,7 +266,7 @@ public class InteractEvents {
             }
         }
         //试炼唱片镐挖矿
-        if (item.is(ItemRegistry.DISC_PICKAXE_TRIAL.get()) && (level.getBlockState(pos).is(BlockTags.BEACON_BASE_BLOCKS))){
+        if (item.is(ItemRegistry.DISC_PICKAXE_TRIAL.get()) && state.is(BlockTags.BEACON_BASE_BLOCKS)){
             event.setCanceled(true);
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
             level.levelEvent(2001, pos,
@@ -261,20 +283,26 @@ public class InteractEvents {
                 });
             }
         }
-        //地牢钢镐挖刷怪笼
-        if (item.is(ItemRegistry.DUNGEON_PICKAXE.get()) && (level.getBlockState(pos).is(Blocks.SPAWNER))){
-            event.setCanceled(true);
-            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-            level.levelEvent(2001, pos,
-                    Block.getId(level.getBlockState(pos)));
-            ItemEntity spawner = new ItemEntity(level, pos.getX() + 0.5D,pos.getY() + 0.5D,pos.getZ() + 0.5D, new ItemStack(Items.SPAWNER));
-            spawner.setPickUpDelay(10);
-            level.addFreshEntity(spawner);
-            item.hurtAndBreak(1, event.getPlayer(), (p_40665_) -> {
-                p_40665_.broadcastBreakEvent(event.getPlayer().getUsedItemHand());
-            });
+
+        if (item.is(ItemRegistry.DUNGEON_PICKAXE.get())){
+            //地牢钢镐挖矿
+            if(state.getBlock().asItem().getDefaultInstance().is(ItemTags.create(new ResourceLocation("forge:ores")))){
+                event.getPlayer().heal((float)(Config.DUNGEON_PICKAXE_HEAL.get() + 0));
+            }
+            //地牢钢镐挖刷怪笼
+            if(state.is(Blocks.SPAWNER)) {
+                event.getPlayer().heal((float)(Config.DUNGEON_PICKAXE_HEAL.get() + 0));
+                event.setCanceled(true);
+                level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                level.levelEvent(2001, pos,
+                        Block.getId(level.getBlockState(pos)));
+                ItemEntity spawner = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, new ItemStack(Items.SPAWNER));
+                spawner.setPickUpDelay(10);
+                level.addFreshEntity(spawner);
+                item.hurtAndBreak(1, event.getPlayer(), (p_40665_) -> {
+                    p_40665_.broadcastBreakEvent(event.getPlayer().getUsedItemHand());
+                });
+            }
         }
-
-
     }
 }

@@ -45,6 +45,7 @@ public class Config
     public static ForgeConfigSpec.DoubleValue DUNGEON_SWORD_ENCH;
     public static ForgeConfigSpec.DoubleValue DUNGEON_SWORD_HEAL;
     public static ForgeConfigSpec.DoubleValue DUNGEON_PICKAXE_HEAL;
+    public static ForgeConfigSpec.DoubleValue DUNGEON_ARMOR_HEAL;
     public static ForgeConfigSpec.DoubleValue DUNGEON_HAMMER_MULTI;
     public static ForgeConfigSpec.BooleanValue DUNGEON_REPLACE_EGG;
     public static final String DISC = "disc";
@@ -164,7 +165,9 @@ public class Config
         DUNGEON_SWORD_HEAL = COMMON_BUILDER.comment("Define the percentage of healing amount of Dungeon Sword.")
                 .defineInRange("dungeonSwordHeal", 20, 0, Double.MAX_VALUE);
         DUNGEON_PICKAXE_HEAL = COMMON_BUILDER.comment("Define the healing amount of Dungeon Pickaxe.")
-                .defineInRange("dungeonPickaxeHeal", 4, 0, Double.MAX_VALUE);
+                .defineInRange("dungeonPickaxeHeal", 2, 0, Double.MAX_VALUE);
+        DUNGEON_ARMOR_HEAL = COMMON_BUILDER.comment("Define the healing amount of Dungeon Armor.")
+                .defineInRange("dungeonArmorHeal", 4, 0, Double.MAX_VALUE);
         DUNGEON_REPLACE_EGG = COMMON_BUILDER.comment("If it's true, Dragon Egg will replace Ender Dragon Spawn Egg when you killed Ender Dragon by Dungeon Steel Sword.")
                 .define("dungeonReplaceEgg", true);
         COMMON_BUILDER.pop();

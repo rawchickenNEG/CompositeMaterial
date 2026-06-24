@@ -10,6 +10,6 @@
     "item": "composite_material:primitive_pickaxe"
   },
   "template": {
-    "item": "composite_material:ancient_fiber"
+    "item": "composite_material:primitive_upgrade_smithing_template"
   }
 }

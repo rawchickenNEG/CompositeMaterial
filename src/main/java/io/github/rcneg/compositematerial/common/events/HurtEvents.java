@@ -80,22 +80,20 @@ public class HurtEvents {
             ArrayList<ResourceKey<DamageType>> damageList = new ArrayList<>();
             damageList.add(DamageTypes.GENERIC_KILL);
             damageList.add(DamageTypes.FELL_OUT_OF_WORLD);
-            damageList.add(DamageTypes.EXPLOSION);
-            damageList.add(DamageTypes.PLAYER_EXPLOSION);
             damageList.add(DamageTypes.OUTSIDE_BORDER);
             damageList.add(DamageTypes.STARVE);
             if(damage.getEntity() == null && damageList.stream().noneMatch(damage::is)){
                 event.setCanceled(true);
             }
         }
-        //地牢钢镐治疗
-        if (entity.getItemBySlot(EquipmentSlot.MAINHAND).is(ItemRegistry.DUNGEON_PICKAXE.get())){
+        //地牢钢套治疗
+        if (entity.getItemBySlot(EquipmentSlot.HEAD).is(ItemRegistry.DUNGEON_HELMET.get())
+                && entity.getItemBySlot(EquipmentSlot.CHEST).is(ItemRegistry.DUNGEON_CHESTPLATE.get())
+                && entity.getItemBySlot(EquipmentSlot.LEGS).is(ItemRegistry.DUNGEON_LEGGINGS.get())
+                && entity.getItemBySlot(EquipmentSlot.FEET).is(ItemRegistry.DUNGEON_BOOTS.get())){
             float d0 = event.getAmount();
-            float d1 = (float) (Config.DUNGEON_PICKAXE_HEAL.get() * 1.0);
+            float d1 = (float) (Config.DUNGEON_PICKAXE_HEAL.get() * 1.0f);
             if (event.getSource() != null){
-                entity.getItemBySlot(EquipmentSlot.MAINHAND).hurtAndBreak(1, event.getEntity(), (p_40665_) -> {
-                    p_40665_.broadcastBreakEvent(event.getEntity().getUsedItemHand());
-                });
                 if (d1 >= d0){
                     entity.heal(d1 - d0);
                     event.setCanceled(true);
@@ -104,6 +102,57 @@ public class HurtEvents {
                 }
             }
         }
+        //幻灭套免疫爆炸魔法弹射物
+        if(        entity.getItemBySlot(EquipmentSlot.HEAD).is(ItemRegistry.VANITATIUM_HELMET.get())
+                || entity.getItemBySlot(EquipmentSlot.CHEST).is(ItemRegistry.VANITATIUM_CHESTPLATE.get())
+                || entity.getItemBySlot(EquipmentSlot.LEGS).is(ItemRegistry.VANITATIUM_LEGGINGS.get())
+                || entity.getItemBySlot(EquipmentSlot.FEET).is(ItemRegistry.VANITATIUM_BOOTS.get()))
+        {
+            boolean hurtFlag = false;
+            boolean enchanted = entity.getItemBySlot(EquipmentSlot.HEAD).isEnchanted()
+                    || entity.getItemBySlot(EquipmentSlot.CHEST).isEnchanted()
+                    || entity.getItemBySlot(EquipmentSlot.LEGS).isEnchanted()
+                    || entity.getItemBySlot(EquipmentSlot.FEET).isEnchanted();
+            if(!enchanted && (damage.is(DamageTypeTags.WITCH_RESISTANT_TO)
+                    || damage.is(DamageTypeTags.IS_EXPLOSION)
+                    || event.getSource().is(DamageTypeTags.IS_PROJECTILE)
+                    || event.getSource().getDirectEntity() instanceof Projectile)){
+                hurtFlag = true;
+            }
+
+            if(        entity.getItemBySlot(EquipmentSlot.HEAD).is(ItemRegistry.VANITATIUM_HELMET.get())
+                    && entity.getItemBySlot(EquipmentSlot.CHEST).is(ItemRegistry.VANITATIUM_CHESTPLATE.get())
+                    && entity.getItemBySlot(EquipmentSlot.LEGS).is(ItemRegistry.VANITATIUM_LEGGINGS.get())
+                    && entity.getItemBySlot(EquipmentSlot.FEET).is(ItemRegistry.VANITATIUM_BOOTS.get()))
+            {
+                /*
+                if(entity instanceof Player player){
+                    if(entity.invulnerableTime == 0 && (player.getCooldowns().isOnCooldown(ItemRegistry.VANITATIUM_HELMET.get())
+                            || player.getCooldowns().isOnCooldown(ItemRegistry.VANITATIUM_CHESTPLATE.get())
+                            || player.getCooldowns().isOnCooldown(ItemRegistry.VANITATIUM_LEGGINGS.get())
+                            || player.getCooldowns().isOnCooldown(ItemRegistry.VANITATIUM_BOOTS.get()))){
+                        level.playSound((Player)null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ARMOR_EQUIP_NETHERITE, entity.getSoundSource(), 0.5F, entity.getVoicePitch());
+                        hurtFlag = true;
+                    }
+                }
+                float hurtRate = enchanted ? 0.1F : 0.25F;
+                if(entity.invulnerableTime == 0 && entity.getRandom().nextFloat() < hurtRate){
+                    if(entity instanceof Player player){
+                        player.getCooldowns().addCooldown(ItemRegistry.VANITATIUM_HELMET.get(), 100);
+                        player.getCooldowns().addCooldown(ItemRegistry.VANITATIUM_CHESTPLATE.get(), 100);
+                        player.getCooldowns().addCooldown(ItemRegistry.VANITATIUM_LEGGINGS.get(), 100);
+                        player.getCooldowns().addCooldown(ItemRegistry.VANITATIUM_BOOTS.get(), 100);
+                    }
+                    level.playSound((Player)null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, entity.getSoundSource(), 0.5F, entity.getVoicePitch());
+                    hurtFlag = true;
+                }
+             */
+                if(hurtFlag){
+                    event.setCanceled(true);
+                }
+            }
+        }
+
         //紫晶盾免疫音爆
         Item item = ItemRegistry.AMETHYST_SHIELD.get();
         if(mainStack.is(item) || offStack.is(item)) {

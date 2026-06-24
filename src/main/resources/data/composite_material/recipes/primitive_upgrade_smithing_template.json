@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "1": {
+      "item": "composite_material:ancient_fiber"
+    },
+    "2": {
+      "item": "composite_material:evolutium"
+    },
+    "3": {
+      "item": "composite_material:enlightened_totem"
+    },
+    "4": {
+      "item": "composite_material:strong_will"
+    },
+    "5": {
+      "item": "composite_material:primitive_tenacity"
+    }
+  },
+  "pattern": [
+    "131",
+    "454",
+    "121"
+  ],
+  "result": {
+    "item": "composite_material:primitive_upgrade_smithing_template"
+  }
+}

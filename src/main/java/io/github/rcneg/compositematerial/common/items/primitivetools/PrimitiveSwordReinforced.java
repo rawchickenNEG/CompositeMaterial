@@ -1,9 +1,17 @@
 package io.github.rcneg.compositematerial.common.items.primitivetools;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
@@ -17,10 +25,31 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class PrimitiveSwordReinforced extends SwordItem {
     public PrimitiveSwordReinforced(Tier p_43269_, int p_43270_, float p_43271_, Properties p_43272_) {
         super(p_43269_, p_43270_, p_43271_, p_43272_);
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack)
+    {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.putAll(this.getDefaultAttributeModifiers(slot));
+        double addition = getCount(stack);
+        if (slot == EquipmentSlot.MAINHAND) {
+            builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(UUID.fromString("74901745-1135-2794-6942-994432469997"), "atk_damage", 2.0 * addition, AttributeModifier.Operation.ADDITION));
+        }
+        return builder.build();
+    }
+
+    public static int getCount(ItemStack itemStack) {
+        CompoundTag tag = itemStack.getTag();
+        if (tag == null || !tag.contains("PrimitiveAddition", Tag.TAG_LIST))
+            return 0;
+        ListTag list = tag.getList("PrimitiveAddition", Tag.TAG_STRING);
+        return list.size();
     }
 
     @Override

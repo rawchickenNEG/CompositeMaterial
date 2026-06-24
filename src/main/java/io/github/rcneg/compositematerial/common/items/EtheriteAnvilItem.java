@@ -24,6 +24,7 @@ public class EtheriteAnvilItem extends ItemNameBlockItem {
     {
         String string = "tooltip.composite_material." + stack.getItem();
         tooltip.add(Component.translatable(string).withStyle(ChatFormatting.DARK_PURPLE));
-        tooltip.add(Component.translatable(string + "_1", Config.ANVIL_MAX_DAMAGE.get(), "%").withStyle(ChatFormatting.DARK_PURPLE));
+        tooltip.add(Component.translatable(string + "_1").withStyle(ChatFormatting.DARK_PURPLE));
+        tooltip.add(Component.translatable(string + "_2", Config.ANVIL_MAX_DAMAGE.get(), "%").withStyle(ChatFormatting.DARK_PURPLE));
     }
 }

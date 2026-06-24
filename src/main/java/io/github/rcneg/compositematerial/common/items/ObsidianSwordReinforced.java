@@ -56,18 +56,15 @@ public class ObsidianSwordReinforced extends SwordItem {
         CompoundTag tag = itemstack.getTag();
         if (tag != null && itemstack.isEnchanted()) {
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(itemstack);
-            int enchNum = enchantments.size() * 2;
             int enchAdd = 0;
             for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-                if(entry.getValue() == 1){
-                    if(entry.getKey().getMaxLevel() == 1){
-                        enchAdd += 4;
-                    }
+                if(entry.getKey().getMaxLevel() == 1){
+                    enchAdd += 4;
                 } else {
-                    enchAdd += entry.getValue() - 1;
+                    enchAdd += entry.getValue();
                 }
             }
-            tag.putInt("ObsidianEnchantmentAddition", enchNum + enchAdd);
+            tag.putInt("ObsidianEnchantmentAddition", enchAdd);
         }
     }
 
@@ -75,7 +72,6 @@ public class ObsidianSwordReinforced extends SwordItem {
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn)
     {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(Component.translatable("tooltip.composite_material.obsidian_tool").withStyle(ChatFormatting.DARK_AQUA));
         tooltip.add(Component.translatable("tooltip.composite_material.obsidian_sword_reinforced").withStyle(ChatFormatting.DARK_PURPLE));
     }
 }

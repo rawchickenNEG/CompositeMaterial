@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "composite_material:abyss_fang"
+  },
+  "base": {
+    "item": "composite_material:primitive_sword"
+  },
+  "result": {
+    "item": "composite_material:primitive_sword_reinforced"
+  },
+  "template": {
+    "item": "composite_material:evolutium"
+  }
+}

@@ -14,7 +14,7 @@ public class AnvilBlockMixin {
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
     private static void cm$specialAnvil(BlockState state, CallbackInfoReturnable<BlockState> cir) {
         if (state.is(BlockRegistry.ETHERITE_ANVIL.get())) {
-            cir.setReturnValue(BlockRegistry.ETHERITE_ANVIL.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, state.getValue( HorizontalDirectionalBlock.FACING)));
+            cir.setReturnValue(BlockRegistry.ETHERITE_ANVIL.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, state.getValue(HorizontalDirectionalBlock.FACING)));
         }
     }
 }

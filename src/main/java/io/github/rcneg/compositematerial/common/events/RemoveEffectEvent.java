@@ -29,6 +29,12 @@ public class RemoveEffectEvent {
                 event.setResult(Event.Result.DENY);
             }
         }
+        if(    (entity.getItemBySlot(EquipmentSlot.HEAD).is(ItemRegistry.VANITATIUM_HELMET.get()) && entity.getItemBySlot(EquipmentSlot.HEAD).isEnchanted())
+                || (entity.getItemBySlot(EquipmentSlot.CHEST).is(ItemRegistry.VANITATIUM_HELMET.get()) && entity.getItemBySlot(EquipmentSlot.CHEST).isEnchanted())
+                || (entity.getItemBySlot(EquipmentSlot.LEGS).is(ItemRegistry.VANITATIUM_HELMET.get()) && entity.getItemBySlot(EquipmentSlot.LEGS).isEnchanted())
+                || (entity.getItemBySlot(EquipmentSlot.FEET).is(ItemRegistry.VANITATIUM_HELMET.get())) && entity.getItemBySlot(EquipmentSlot.FEET).isEnchanted()){
+            event.setResult(Event.Result.DENY);
+        }
         if(    entity.getItemBySlot(EquipmentSlot.HEAD).is(ItemRegistry.PRIMITIVE_HELMET.get())
                 || entity.getItemBySlot(EquipmentSlot.CHEST).is(ItemRegistry.PRIMITIVE_CHESTPLATE.get())
                 || entity.getItemBySlot(EquipmentSlot.LEGS).is(ItemRegistry.PRIMITIVE_LEGGINGS.get())
