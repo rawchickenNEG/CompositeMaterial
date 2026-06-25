@@ -1,53 +1,48 @@
 package io.github.rcneg.compositematerial.common.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import io.github.rcneg.compositematerial.common.init.BlockRegistry;
-import net.minecraft.world.entity.player.Abilities;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AnvilMenu;
-import net.minecraft.world.inventory.DataSlot;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.state.BlockState;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.*;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(value = AnvilMenu.class, priority = 2000)
 public class AnvilMenuMixin {
-    @Redirect(
+    @ModifyExpressionValue(
             method = "onTake",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/inventory/DataSlot;get()I"
             )
     )
-    private int cm$specialAnvilCost(DataSlot slot) {
+    private int cm$specialAnvilCost(int original) {
         if (cm$isEtheriteAnvil() || cm$isEtheriteAnvilSurrounded()) {
             //无经验损耗
             return 0;
         }
-        return slot.get();
+        return original;
     }
 
-    @Redirect(
+    @ModifyExpressionValue(
             method = "createResult",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/item/enchantment/Enchantment;isCompatibleWith(Lnet/minecraft/world/item/enchantment/Enchantment;)Z"
             )
     )
-    private boolean cm$specialAnvilRemoveConflict(Enchantment enchantment, Enchantment enchantment1) {
+    private boolean cm$specialAnvilRemoveConflict(boolean original) {
         //无视兼容性
         if (cm$isEtheriteAnvil()) {
             return true;
         }
-        return enchantment.isCompatibleWith(enchantment1);
+        return original;
     }
 
-    /*
-    @Redirect(
+    @ModifyExpressionValue(
             method = "createResult",
             at = @At(
                     value = "FIELD",
@@ -56,11 +51,11 @@ public class AnvilMenuMixin {
                     ordinal = 1
             )
     )
-    private boolean cm$specialAnvilIgnoreExpensive(Abilities abilities) {
+    private boolean cm$specialAnvilIgnoreExpensive(boolean original) {
         //绕过过于昂贵
-        return cm$isEtheriteAnvil() || cm$isEtheriteAnvilSurrounded() || abilities.instabuild;
+        return cm$isEtheriteAnvil() || cm$isEtheriteAnvilSurrounded() || original;
     }
-     */
+
     @ModifyVariable(
             method = "onTake",
             ordinal = 0,
@@ -76,7 +71,7 @@ public class AnvilMenuMixin {
 
     @Unique
     private boolean cm$isEtheriteAnvil() {
-        AnvilMenu menu = (AnvilMenu)(Object)this;
+        AnvilMenu menu = (AnvilMenu) (Object) this;
         final boolean[] flag = {false};
         menu.access.execute((level, pos) -> {
             BlockState state = level.getBlockState(pos);
@@ -87,7 +82,7 @@ public class AnvilMenuMixin {
 
     @Unique
     private boolean cm$isEtheriteAnvilSurrounded() {
-        AnvilMenu menu = (AnvilMenu)(Object)this;
+        AnvilMenu menu = (AnvilMenu) (Object) this;
         final boolean[] flag = {false};
         menu.access.execute((level, pos) -> {
             BlockState state1 = level.getBlockState(pos.above());
